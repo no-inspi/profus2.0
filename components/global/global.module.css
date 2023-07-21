@@ -1,0 +1,31 @@
+.stat {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    background: no-repeat center/auto url(../img/sprite.png);
+    vertical-align: middle;
+}
+
+.stat_vitalite {
+    background-position: -97px -319px;
+}
+
+.stat_sagesse {
+    background-position: -97px -358px;
+}
+
+.stat_force {
+    background-position: -97px -432px;
+}
+
+.stat_feu {
+    background-position: -97px -394px;
+}
+
+.stat_eau {
+    background-position: -97px -89px;
+}
+
+.stat_agilite {
+    background-position: -97px -167px;
+}

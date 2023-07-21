@@ -1,0 +1,31 @@
+.table__container {
+    background-color: #1b2430;
+    width: 80vw;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.icon_carac {
+}
+
+.td {
+    padding: 15px 0px;
+}
+
+.input_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /* width: 20%; */
+}
+
+.nb_input {
+    /* width: 10%; */
+    text-align: center;
+}
+
+.footer_total {
+    text-align: right;
+}

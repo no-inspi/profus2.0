@@ -1,0 +1,77 @@
+.brisage__container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.brisage__title {
+    font-size: 4.2rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #1b2430;
+    opacity: 1;
+}
+
+.brisage__card {
+    background-color: #1b2430;
+    padding: 50px;
+    border-radius: 10px;
+    width: 80vw;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+
+.brisage__server__container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    /* align-items: space-between; */
+}
+
+.brisage__server {
+    color: white;
+    background-color: #1b2430;
+}
+
+.option__select {
+    color: #1b2430;
+}
+
+.item__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.item__display {
+    color: white;
+    font-size: 2rem;
+}
+
+.input__percent {
+    color: white;
+    font-size: 1.5rem;
+}
+
+.input__right {
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.input__right:hover {
+    background-color: #17cf97;
+    color: white;
+}
+
+.container_table {
+    display: flex;
+    width: 100%;
+}
