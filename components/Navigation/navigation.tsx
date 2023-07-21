@@ -1,9 +1,32 @@
-import { Button, ButtonGroup, Stack } from '@chakra-ui/react'
+import {
+  Avatar,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Text,
+  Button
+} from '@chakra-ui/react'
 import styles from "./Navigation.module.css"
 import React, { useState, useEffect } from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee, faBars, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { AiOutlineUser } from 'react-icons/ai'
+import { IoExitOutline } from 'react-icons/io5'
+import { MdOutlineAccountCircle } from 'react-icons/md'
 
 const MENUCONST = [
   {
@@ -39,10 +62,18 @@ const MENUCONST = [
     "name": "TradeHelper"
   },
 ]
-
 export default function Navigation() {
+  const OverlayTwo = () => (
+    <ModalOverlay
+      bg='blackAlpha.300'
+      backdropFilter='blur(10px) hue-rotate(90deg)'
+    />
+  )
+
   const [clickedMenu, setClickedMenu] = useState(false)
   const [activeMenu, setActiveMenu] = useState([false, false, false, false, false])
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [overlay, setOverlay] = useState(<OverlayTwo />)
 
 
   useEffect(() => {
@@ -69,6 +100,8 @@ export default function Navigation() {
     setActiveMenu(temp_state)
   }
 
+
+
   return (
     <>
       <nav className={styles.nav}>
@@ -78,19 +111,53 @@ export default function Navigation() {
             {MENUCONST.map((menu, index) => (
               <li ><a className={activeMenu[index] ? styles.active : ""} href={menu.link}>{menu.name}</a></li>
             ))}
+            <li>
+
+              <Menu>
+                <MenuButton>
+                  <Avatar size='sm' bg='white.500' icon={<AiOutlineUser fontSize='1.5rem' />} className={styles.avatar}/>
+                </MenuButton>
+                <MenuList>
+                  <MenuGroup title='Profile'>
+                    <MenuItem icon={<MdOutlineAccountCircle style={{ fontSize: "1.4em" }} />}>My Account </MenuItem>
+                  </MenuGroup>
+                  <MenuDivider />
+                  <div onClick={() => {
+                    setOverlay(<OverlayTwo />)
+                    onOpen()
+                  }}>
+                  <MenuItem icon={<IoExitOutline style={{ fontSize: "1.4em" }}  />}> Connexion </MenuItem>
+                  </div>
+                  <MenuItem icon={<IoExitOutline style={{ fontSize: "1.4em" }} />}> Deconnexion </MenuItem>
+                </MenuList>
+              </Menu>
+            </li>
 
             {/* <li><a>Shop</a></li>
             <li><a>Blog</a></li>
             <li><a>About</a></li>
             <li><a>Contact </a></li> */}
           </ul>
+
         </div>
         <div className={styles.mobile} onClick={handleClick}>
           <FontAwesomeIcon icon={clickedMenu ? faXmark : faBars} className={styles.mobile_el} />
           {/* <FontAwesomeIcon icon={faXmark} /> */}
         </div>
       </nav>
-
+      <Modal isCentered isOpen={isOpen} onClose={onClose}>
+        {overlay}
+        <ModalContent>
+          <ModalHeader>Modal Title</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>Custom backdrop filters!</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
 
     </>
   )

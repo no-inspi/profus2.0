@@ -113,27 +113,31 @@ export default function Brisage() {
                     </div>
                     <div className={brisage_styles.item__container}>
                         <div className={brisage_styles.item__display}>
-                            {item ? (item.name_fr + " lvl." + item.level) : null}
+                            {item.name_fr ? (item.name_fr + " lvl." + item.level) : null}
                         </div>
                         <div>
-                            <InputGroup size='lg'>
-                                <InputLeftAddon children='Taux' />
-                                <Input placeholder='Entre un pourcentage' value={taux} className={brisage_styles.input__percent} onChange={(event) => handleChangeTaux(event)} />
-                                {/* <InputRightAddon children='%' /> */}
-                                <Tooltip label="Sauvegarde ton taux pour aider la communauté" aria-label='save_tooltip'>
-                                    <InputRightAddon children='Save' onClick={handleResultSelect} className={brisage_styles.input__right} />
-                                </Tooltip>
-                            </InputGroup>
+                            {item.name_fr &&
+                                <InputGroup size='lg'>
+                                    <InputLeftAddon children='Taux' />
+                                    <Input placeholder='Entre un pourcentage' value={taux} className={brisage_styles.input__percent} onChange={(event) => handleChangeTaux(event)} />
+                                    {/* <InputRightAddon children='%' /> */}
+                                    <Tooltip label="Sauvegarde ton taux pour aider la communauté" aria-label='save_tooltip'>
+                                        <InputRightAddon children='Save' onClick={handleResultSelect} className={brisage_styles.input__right} />
+                                    </Tooltip>
+                                </InputGroup>
+                            }
                         </div>
                     </div>
-                    <div className={brisage_styles.container_table}>
-                        {/* <i className={`${global_styles.stat} ${global_styles.stat_vitalite}`}></i>
+                    {item.name_fr &&
+                        <div className={brisage_styles.container_table}>
+                            {/* <i className={`${global_styles.stat} ${global_styles.stat_vitalite}`}></i>
                         <i className={`${global_styles.stat} ${global_styles.stat_force}`}></i>
                         <i className={`${global_styles.stat} ${global_styles.stat_eau}`}></i>
                         <i className={`${global_styles.stat} ${global_styles.stat_agilite}`}></i>
                         <i className={`${global_styles.stat} ${global_styles.stat_neutre}`}></i> */}
-                        <RunesTable />
-                    </div>
+                            <RunesTable />
+                        </div>
+                    }
                 </div>
 
             </div>

@@ -26,6 +26,10 @@
     text-align: center;
 }
 
+.button__save {
+    background-color: black;
+}
+
 .footer_total {
     text-align: right;
 }

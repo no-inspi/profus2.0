@@ -4,7 +4,8 @@ import {
     NumberInputStepper,
     NumberIncrementStepper,
     NumberDecrementStepper,
-    Input
+    Input,
+    Button
 } from '@chakra-ui/react'
 
 import styles from "./RunesTable.module.css"
@@ -30,12 +31,12 @@ export default function RunesTable() {
                         <td className={styles.td}><i className={`${global_styles.stat} ${global_styles.stat_force} ${styles.icon_carac}`}></i> Force </td>
                         <td>
                             <div className={styles.input_container}>
-                                <Input placeholder='10' className={styles.nb_input}  size='sm' htmlSize={4} width='auto' focusBorderColor='#17cf97'/>
+                                <Input placeholder='10' className={styles.nb_input}  size='sm' htmlSize={4} width='auto' focusBorderColor='#01785E'/>
                             </div>
                         </td>
                         <td>
                             <div className={styles.input_container}>
-                                <Input placeholder='10' className={styles.nb_input}  size='sm' htmlSize={4} width='auto' focusBorderColor='#17cf97'/>
+                                <Input placeholder='10' className={styles.nb_input}  size='sm' htmlSize={4} width='auto' focusBorderColor='#01785E'/>
                             </div>
                         </td>
                         <td>20</td>
@@ -46,12 +47,12 @@ export default function RunesTable() {
                         <td className={styles.td}><i className={`${global_styles.stat} ${global_styles.stat_feu} ${styles.icon_carac}`}></i> Feu </td>
                         <td>
                             <div className={styles.input_container}>
-                                <Input placeholder='10' className={styles.nb_input}  size='sm' htmlSize={4} width='auto' focusBorderColor='#17cf97'/>
+                                <Input placeholder='10' className={styles.nb_input}  size='sm' htmlSize={4} width='auto' focusBorderColor='#01785E'/>
                             </div>
                         </td>
                         <td>
                             <div className={styles.input_container}>
-                                <Input placeholder='10' className={styles.nb_input}  size='sm' htmlSize={4} width='auto' focusBorderColor='#17cf97'/>
+                                <Input placeholder='10' className={styles.nb_input}  size='sm' htmlSize={4} width='auto' focusBorderColor='#01785E'/>
                             </div>
                         </td>
                         <td>20</td>
@@ -61,7 +62,10 @@ export default function RunesTable() {
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colSpan={5} className={styles.footer_total}><b>Total sans focus :</b></td>
+                        <td></td>
+                        <td></td>
+                        <td><Button bg='#01785E' color="white"  _hover={{ bg: '#1B3A4B', color: "white" }} className={styles.button__save}>Save</Button></td>
+                        <td colSpan={2} className={styles.footer_total}><b>Total sans focus :</b></td>
                         <td className={styles.td}><b>1960</b></td>
                     </tr>
                 </tfoot>

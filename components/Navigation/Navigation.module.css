@@ -1,3 +1,4 @@
+
 .nav {
     display: flex;
     align-items: center;
@@ -30,7 +31,7 @@
 }
 
 .navbar li a:hover, .navbar li a.active {
-    color: #17cf97
+    color: #01785E
 }
 
 .navbar li a:hover::after,
@@ -38,7 +39,7 @@
     content: "";
     width: 40%;
     height: 2px;
-    background: #17cf97;
+    background: #01785E;
     position: absolute;
     bottom: -4px;
     left: 20px;
@@ -56,6 +57,23 @@
     transition: 0.3s ease-in-out;
 }
 
+.avatar:hover {
+    background-color: black;
+    color: black;
+}
+
+@media screen and (max-width: 1200px) {
+    .navbar li a {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .navbar li a {
+        font-size: 0.8rem;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .navbar {
         display: flex;
@@ -71,7 +89,10 @@
         box-shadow: 0 40px 60px rgba(0, 0, 0, 0.1);
         padding: 40px 0 0 10px;
         transition: 0.3s ease-in-out;
+        z-index: 10;
     }
+
+   
 
     .navbar.active {
         right: 0px;

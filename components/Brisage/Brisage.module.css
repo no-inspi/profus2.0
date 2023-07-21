@@ -19,8 +19,8 @@
     background-color: #1b2430;
     padding: 50px;
     border-radius: 10px;
-    width: 80vw;
-    height: 70vh;
+    width: 98vw;
+    height: calc(95vh - 80px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -67,7 +67,7 @@
 }
 
 .input__right:hover {
-    background-color: #17cf97;
+    background-color: #006466;
     color: white;
 }
 

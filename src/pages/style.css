@@ -1,11 +1,26 @@
-html {
-    background: #17cf97;
+* {
+    margin: 0;
+    padding: 0;
 }
+
+/* html {
+    background: rgb(171,214,153) !important;
+    background: linear-gradient(129deg, rgba(171,214,153,1) 0%, rgba(199,221,204,1) 50%, rgba(124,208,190,1) 100%); !important;
+} */
 
 body {
-    background: #17cf97;
+    background: rgb(0,100,102) !important;
+    background: linear-gradient(130deg, rgba(0,100,102,1) 0%, rgba(33,47,69,1) 100%) !important;
 }
 
-.background__color {
-    background: #17cf97;
-}
+/* 
+Light Lime: #01785E
+
+Fresh Lemon: #006466
+
+Teal: #75c9b7
+
+Mint: #c7ddcc
+
+violet: #4D194D
+ */

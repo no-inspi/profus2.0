@@ -38,7 +38,7 @@
 }
 
 .highlightedItem {
-    background-color: #17cf97;
+    background-color: #01785E;
     border-radius: 8px;
 }
 
@@ -60,7 +60,7 @@
 }
 
 .clearButton:hover {
-    background-color: #17cf97;
+    background-color: #01785E;
     color: white;
     font-size: 1.1rem;
 }
