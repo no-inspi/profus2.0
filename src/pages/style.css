@@ -9,8 +9,8 @@
 } */
 
 body {
-    background: rgb(0,100,102) !important;
-    background: linear-gradient(130deg, rgba(0,100,102,1) 0%, rgba(33,47,69,1) 100%) !important;
+    background: rgb(27,36,48) !important;
+    background: linear-gradient(130deg, rgba(27,36,48,1) 0%, rgba(33,47,69,1) 100%)!important;
 }
 
 /* 
@@ -22,5 +22,5 @@ Teal: #75c9b7
 
 Mint: #c7ddcc
 
-violet: #4D194D
+violet: #212F45
  */

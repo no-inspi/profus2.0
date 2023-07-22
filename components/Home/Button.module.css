@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+.basic_button {
+    background: white;
+    position: relative;
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 10px 30px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    color: black;
+}
+
+.gradient_border {
+    --borderWidth: 3px;
+    --borderRadius: 8px;
+    background: #1D1F20;
+    position: relative;
+    border-radius: var(--borderWidth);
+    cursor: pointer;
+    padding: 10px 30px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+  }
+  
+  .gradient_border:after {
+    content: '';
+    position: absolute;
+    top: calc(-1 * var(--borderWidth));
+    left: calc(-1 * var(--borderWidth));
+    height: calc(100% + var(--borderWidth) * 2);
+    width: calc(100% + var(--borderWidth) * 2);
+    background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+    border-radius: calc(2 * var(--borderWidth));
+    z-index: -1;
+    animation: animatedgradient 4s ease alternate infinite;
+    background-size: 300% 300%;
+    box-shadow: 0 4px 4px 0 #00000040;
+  }
+  
+  
+  @keyframes animatedgradient {
+      0% {
+          background-position: 0% 50%;
+          box-shadow: 2px 7px 43px 1px rgba(243,112,85,0.78);
+      }
+      50% {
+          background-position: 100% 50%;
+          box-shadow: 2px 7px 43px 1px rgba(80,115,184,0.78);
+      }
+      100% {
+          background-position: 0% 50%;
+          box-shadow: 2px 7px 43px 1px rgba(243,112,85,0.78);
+      }
+  }
