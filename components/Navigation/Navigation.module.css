@@ -84,6 +84,33 @@
     background-color: red;
 }
 
+.connected__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.connected__settings {
+    /* color: black; */
+    /* background-color: white; */
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.connected__settings:hover {
+    opacity: 0.8;
+}
+
+.connected__deconnexion {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
 @media screen and (max-width: 1200px) {
     .navbar li a {
         font-size: 0.875rem;

@@ -6,6 +6,8 @@ import styles from "./SearchBar.module.css"
 import brisage_styles from "./Brisage.module.css"
 import global_styles from "../global/global.module.css"
 
+import Cookies from 'js-cookie';
+
 import RunesTable from "./Runes_table"
 
 const style = {
@@ -20,11 +22,19 @@ const style = {
     groupHeading: styles.groupHeading,
 }
 
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer "+Cookies.get('accessToken'));
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+};
+
 const listbox = {
     displayField: 'name',
     data: async (query: any) => {
         const res = await fetch(
-            `http://localhost:3001/items/get_item_filter?contains=${query}`
+            `http://localhost:3001/items/get_item_filter?contains=${query}`, requestOptions
         )
         const data = await res.json()
         return data;
@@ -54,7 +64,6 @@ export default function Brisage() {
     const [isLoading, setisLoading] = useState(false)
     const toast = useToast()
 
-    console.log(listbox)
 
     const onValueChange = (event: any) => {
         if (typeof event !== "undefined") {

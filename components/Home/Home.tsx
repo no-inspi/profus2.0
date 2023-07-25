@@ -4,6 +4,13 @@ import styles from './Home.module.css';
 import stylesCard from './Card.module.css'
 import stylesButton from './Button.module.css'
 
+import Image from 'next/image'
+import home_full from '../img/home_full.png'
+import home_metier from '../img/metiers.png'
+import home_rune from '../img/page_rune.png'
+
+import { GiHammerBreak, GiScythe, GiRuneStone } from 'react-icons/gi'
+
 export default function Home() {
     return (
         <>
@@ -15,17 +22,17 @@ export default function Home() {
                     <h1 className={styles.home__title__container}>
                         <span className={styles.first_main_gradient_text}>
                             <span className={styles.first_gradient_text}>
-                                Créer.
+                                Optimise.
                             </span>
                         </span>
                         <span className={styles.second_main_gradient_text}>
                             <span className={styles.second_gradient_text}>
-                                Craft.
+                                Avec.
                             </span>
                         </span>
                         <span className={styles.third_main_gradient_text}>
                             <span className={styles.third_gradient_text}>
-                                Optimise.
+                                Profus.
                             </span>
                         </span>
                     </h1>
@@ -130,7 +137,7 @@ export default function Home() {
                     <span className={styles.step__number}>1</span>
                 </div>
                 <h3 className={styles.step__title}>
-                    <span className={styles.step__title__text}>Créer</span>
+                    <span className={styles.step__title__text}>Optimisation</span>
                 </h3>
             </div>
             <div className={styles.step__h4class__container}>
@@ -141,15 +148,76 @@ export default function Home() {
                     <span className={styles.step__p__text}>lorem lipsum some test lorem lipsum some test lorem lipsum some test lorem lipsum some test lorem lipsum some test</span>
                 </p>
             </div>
+            <div className={styles.showroom__container}>
+                <div className={styles.showroom__image}>
+                    <Image
+                        src={home_full}
+                        // width={800}
+                        // height={500}
+                        alt="Picture of the author"
+                        className={styles.showroom__image__top}
+                    />
+                    <Image
+                        src={home_metier}
+                        // width={500}
+                        // height={500}
+                        alt="Picture of the author"
+                        className={styles.showroom__image__middle}
+                    />
+                    <Image
+                        src={home_rune}
+                        // width={500}
+                        // height={500}
+                        alt="Picture of the author"
+                        className={styles.showroom__image__bottom}
+                    />
+                </div>
+                <div className={styles.showroom__global__container}>
+                    <div className={styles.showroom__text}>
+                        <div className={styles.showroom__icon}>
+                            <GiHammerBreak style={{ fontSize: "3rem", color: "#999" }} />
+                        </div>
+                        <h5 className={styles.h5class}>
+                            Optimise le brisage de ton item
+                        </h5>
+                        <div className={styles.showroom__description}>
+                            Everything you need to build your site exactly how you imagine, from automatic API handling to built-in image and performance optimizations.
+                        </div>
+                    </div>
+                    <div className={styles.showroom__text}>
+                        <div className={styles.showroom__icon}>
+                            <GiScythe style={{ fontSize: "3rem", color: "#999" }} />
+                        </div>
+                        <h5 className={styles.h5class}>
+                            Economise des kamas en montant tes métiers
+                        </h5>
+                        <div className={styles.showroom__description}>
+                        Connect your pages to any data source, headless CMS, or API and make it work in everyone’s dev environment.
+                        </div>
+                    </div>
+                    <div className={styles.showroom__text}>
+                        <div className={styles.showroom__icon}>
+                            <GiRuneStone style={{ fontSize: "3rem", color: "#999" }} />
+                        </div>
+                        <h5 className={styles.h5class}>
+                            Trouve des astuces fm pour progresser facilement
+                        </h5>
+                        <div className={styles.showroom__description}>
+                        From caching to Serverless Functions, all our cloud primitives work perfectly on localhost.
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div className={styles.step__container}>
                 <span className={styles.step__lines}></span>
                 <div className={styles.step__number__container}>
                     <span className={styles.step__number}>2</span>
                 </div>
                 <h3 className={styles.step__title}>
-                    <span className={styles.step__title__text}>Craft</span>
+                    <span className={styles.step__title__text}>Information</span>
                 </h3>
             </div>
+
         </>
     )
 }

@@ -20,10 +20,20 @@ import {
   Button,
   FormControl,
   FormLabel,
-  Input
+  Input,
+  FormHelperText,
+  InputGroup,
+  InputRightElement,
+  Tooltip,
+  useToast
 } from '@chakra-ui/react'
+import { useForm, SubmitHandler } from "react-hook-form";
+import connexion from "../Auth/connect"
+import inscription from "../Auth/signup"
+
 import styles from "./Navigation.module.css"
 import stylesButton from "./Button.module.css"
+import stylesModal from "./Modal.module.css"
 
 import React, { useState, useEffect, useRef } from 'react'
 
@@ -32,6 +42,10 @@ import { faCoffee, faBars, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { AiOutlineUser } from 'react-icons/ai'
 import { IoExitOutline } from 'react-icons/io5'
 import { MdOutlineAccountCircle } from 'react-icons/md'
+import { GiSettingsKnobs, GiExitDoor } from 'react-icons/gi'
+
+import { useRouter } from 'next/router'
+import Cookies from 'js-cookie';
 
 
 
@@ -71,13 +85,33 @@ const MENUCONST = [
     "name": "Contact"
   },
 ]
-export default function Navigation() {
 
+type Inputs = {
+  example: string,
+  exampleRequired: string,
+};
+
+export default function Navigation() {
+  const [isConnected, setIsConnected] = useState(false)
   const [clickedMenu, setClickedMenu] = useState(false)
   const [activeMenu, setActiveMenu] = useState([false, false, false, false, false])
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen: isOpenLogin, onOpen: onOpenLogin, onClose: onCloseLogin } = useDisclosure()
+  const { isOpen: isOpenSignup, onOpen: onOpenSignup, onClose: onCloseSignup } = useDisclosure()
   const initialRef = useRef(null)
   const [sticky, setSticky] = useState("");
+  const [show, setShow] = useState(false)
+
+  const toast = useToast()
+
+  const router = useRouter()
+
+  // react hooks form
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
+  const { register: registerSignup, handleSubmit: handleSubmitSignup, watch: watchSignup } = useForm<Inputs>();
+
+
+  const onSubmit: SubmitHandler<Inputs> = data => connexion(data, window.location.pathname, setIsConnected, onCloseLogin, toast);
+  const onSubmitSignup: SubmitHandler<Inputs> = data => inscription(data, window.location.pathname, setIsConnected, onCloseSignup, toast);
 
 
   useEffect(() => {
@@ -88,6 +122,11 @@ export default function Navigation() {
       }
 
     }
+
+    if (Cookies.get('accessToken')) {
+      setIsConnected(true)
+    }
+
     window.addEventListener("scroll", isSticky);
     return () => {
       window.removeEventListener("scroll", isSticky);
@@ -115,7 +154,19 @@ export default function Navigation() {
     setActiveMenu(temp_state)
   }
 
+  const handleShowPwd = () => setShow(!show)
 
+  const deconnexion = () => {
+    Cookies.remove('accessToken')
+    Cookies.remove('refreshToken')
+    setIsConnected(false)
+    toast({
+      title: 'Déconnexion Réussie !',
+      status: 'success',
+      duration: 9000,
+      isClosable: true,
+    })
+  }
 
   return (
     <>
@@ -128,8 +179,20 @@ export default function Navigation() {
             ))}
             <li>
               <div className={stylesButton.loginContainer}>
-                <button className={`${stylesButton.button} ${stylesButton.dark}`} onClick={onOpen}> Log in </button>
-                <button className={`${stylesButton.button} ${stylesButton.white}`}> Sign Up </button>
+                {!isConnected ? (
+                  <>
+                    <button className={`${stylesButton.button} ${stylesButton.dark}`} onClick={onOpenLogin}> Log in </button>
+                    <button className={`${stylesButton.button} ${stylesButton.white}`} onClick={onOpenSignup}> Sign Up </button>
+                  </>
+                ) : (
+                  <div className={styles.connected__container}>
+                    <Tooltip label="Paramètres du compte" aria-label='save_tooltip'>
+                      <div className={`${styles.connected__settings} ${stylesButton.white}`}><GiSettingsKnobs /></div>
+                    </Tooltip>
+                    <button className={`${stylesButton.button} ${stylesButton.dark} ${styles.connected__deconnexion}`} onClick={deconnexion}> Deconnexion <GiExitDoor /> </button>
+                  </div>
+                )
+                }
               </div>
             </li>
             {/* <li>
@@ -162,25 +225,98 @@ export default function Navigation() {
           {/* <FontAwesomeIcon icon={faXmark} /> */}
         </div>
       </nav>
-      <Modal isOpen={isOpen} onClose={onClose}>
+
+      {/* Sign up Modal */}
+      <Modal isOpen={isOpenSignup} onClose={onCloseSignup} size={"xl"} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Log In</ModalHeader>
-          {/* <ModalCloseButton /> */}
-          <ModalBody>
-            Lorem ipsum dolor sit amet. Et corporis quisquam eum adipisci
-            impedit quo eius nisi est aspernatur vel veniam velit qui numquam
-            totam. Vel debitis sint ut culpa cupiditate a dolores voluptates ut
-            vero voluptatem non rerum aliquid qui sapiente possimus. Eum natus
-            voluptates hic galisum architecto et nobis incidunt ut odio ipsum
-            qui repudiandae voluptatem.
-          </ModalBody>
+          <form onSubmit={handleSubmitSignup(onSubmitSignup)}>
+            <ModalHeader className={stylesModal.header}>Créer un compte</ModalHeader>
+            {/* <ModalCloseButton /> */}
+            <ModalBody>
+              <FormControl isRequired>
+                <FormLabel>Email</FormLabel>
+                <Input type='email' {...registerSignup("email", { required: true })} />
+                {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Pseudo</FormLabel>
+                <Input type='text' {...registerSignup("pseudoSignup", { required: true })} />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Password</FormLabel>
+                <InputGroup size='md'>
+                  <Input
+                    pr='4.5rem'
+                    type={show ? 'text' : 'password'}
+                    placeholder='Enter password'
+                    {...registerSignup("passwordSignup", { required: true })}
+                  />
+                  <InputRightElement width='4.5rem'>
+                    <Button h='1.75rem' size='sm' onClick={handleShowPwd}>
+                      {show ? 'Hide' : 'Show'}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Confirm your password</FormLabel>
+                <Input type='password' {...registerSignup("verifpasswordsignup", { required: true })}/>
+              </FormControl>
+            </ModalBody>
 
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
+            <ModalFooter>
+              <Button colorScheme="green" mr={3} type='submit'>
+                Créer mon compte
+              </Button>
+              <Button colorScheme="blue" mr={3} onClick={onCloseSignup}>
+                Cancel
+              </Button>
+            </ModalFooter>
+          </form>
+        </ModalContent>
+      </Modal>
+
+      {/* Log in Modal */}
+      <Modal isOpen={isOpenLogin} onClose={onCloseLogin} size={"xl"} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <ModalHeader className={stylesModal.header}>Connexion</ModalHeader>
+            {/* <ModalCloseButton /> */}
+            <ModalBody>
+
+              <FormControl isRequired>
+                <FormLabel>Pseudo</FormLabel>
+                <Input type='text' placeholder='Enter pseudo' {...register("pseudo", { required: true })} />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Password</FormLabel>
+                <InputGroup size='md'>
+                  <Input
+                    pr='4.5rem'
+                    type={show ? 'text' : 'password'}
+                    placeholder='Enter password'
+                    {...register("password", { required: true })}
+                  />
+                  <InputRightElement width='4.5rem'>
+                    <Button h='1.75rem' size='sm' onClick={handleShowPwd}>
+                      {show ? 'Hide' : 'Show'}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button colorScheme="green" mr={3} type="submit">
+                Connexion
+              </Button>
+              <Button colorScheme="blue" mr={3} onClick={onCloseLogin}>
+                Cancel
+              </Button>
+            </ModalFooter>
+          </form>
         </ModalContent>
       </Modal>
 
