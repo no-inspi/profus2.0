@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Input, InputGroup, InputLeftAddon, InputRightAddon, useToast, Tooltip, Select } from "@chakra-ui/react"
 import Turnstone from 'turnstone'
 import recentSearchesPlugin from 'turnstone-recent-searches'
@@ -9,6 +9,7 @@ import global_styles from "../global/global.module.css"
 import Cookies from 'js-cookie';
 
 import RunesTable from "./Runes_table"
+import { calculBrisage } from "./CalculBrisage"
 
 const style = {
     input: styles.searchbox,
@@ -23,11 +24,11 @@ const style = {
 }
 
 var myHeaders = new Headers();
-myHeaders.append("Authorization", "Bearer "+Cookies.get('accessToken'));
+myHeaders.append("Authorization", "Bearer " + Cookies.get('accessToken'));
 
 var requestOptions = {
-  method: 'GET',
-  headers: myHeaders,
+    method: 'GET',
+    headers: myHeaders,
 };
 
 const listbox = {
@@ -60,13 +61,21 @@ const Item = (item: any) => {
 
 export default function Brisage() {
     const [item, setItem] = useState({})
+    const [itemEffect, setItemEffect] = useState([])
     const [taux, setTaux] = useState("100")
     const [isLoading, setisLoading] = useState(false)
     const toast = useToast()
 
+    useEffect(() => {
+        if (item !== "undefined") {
+            calculBrisage(item, setItemEffect)
+        }
+        
+    }, [item, taux])
 
-    const onValueChange = (event: any) => {
+    function onValueChange(event: any) {
         if (typeof event !== "undefined") {
+            
             setItem(event)
         }
     }
@@ -104,6 +113,7 @@ export default function Brisage() {
                         <Turnstone
                             id='search'
                             name='search'
+                            minQueryLength={3}
                             autoFocus={true}
                             typeahead={true}
                             clearButton={true}
@@ -144,7 +154,7 @@ export default function Brisage() {
                         <i className={`${global_styles.stat} ${global_styles.stat_eau}`}></i>
                         <i className={`${global_styles.stat} ${global_styles.stat_agilite}`}></i>
                         <i className={`${global_styles.stat} ${global_styles.stat_neutre}`}></i> */}
-                            <RunesTable />
+                            <RunesTable itemEffect={itemEffect} />
                         </div>
                     }
                 </div>
