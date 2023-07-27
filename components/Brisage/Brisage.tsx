@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Input, InputGroup, InputLeftAddon, InputRightAddon, useToast, Tooltip, Select } from "@chakra-ui/react"
+import { Input, InputGroup, InputLeftAddon, InputRightAddon, useToast, Tooltip, Select, NumberInput, NumberInputField  } from "@chakra-ui/react"
 import Turnstone from 'turnstone'
 import recentSearchesPlugin from 'turnstone-recent-searches'
 import styles from "./SearchBar.module.css"
@@ -23,25 +23,9 @@ const style = {
     groupHeading: styles.groupHeading,
 }
 
-var myHeaders = new Headers();
-myHeaders.append("Authorization", "Bearer " + Cookies.get('accessToken'));
 
-var requestOptions = {
-    method: 'GET',
-    headers: myHeaders,
-};
 
-const listbox = {
-    displayField: 'name',
-    data: async (query: any) => {
-        const res = await fetch(
-            `http://localhost:3001/items/get_item_filter?contains=${query}`, requestOptions
-        )
-        const data = await res.json()
-        return data;
-    },
-    searchType: 'contains',
-}
+
 
 const Item = (item: any) => {
     // const avatar = `${item.thumbnail.path}.${item.thumbnail.extension}`
@@ -66,9 +50,29 @@ export default function Brisage() {
     const [isLoading, setisLoading] = useState(false)
     const toast = useToast()
 
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer " + Cookies.get('accessToken'));
+    
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+    };
+
+    const listbox = {
+        displayField: 'name',
+        data: async (query: any) => {
+            const res = await fetch(
+                `http://localhost:3001/items/get_item_filter?contains=${query}`, requestOptions
+            )
+            const data = await res.json()
+            return data;
+        },
+        searchType: 'contains',
+    }
+
     useEffect(() => {
         if (item !== "undefined") {
-            calculBrisage(item, setItemEffect)
+            calculBrisage(item, setItemEffect, taux)
         }
         
     }, [item, taux])
@@ -92,9 +96,12 @@ export default function Brisage() {
     }
 
     const handleChangeTaux = (event: any) => {
-        // console.log(event.target.value)
-        let final_value = event.target.value.split("%")[0]
-        setTaux(final_value)
+        console.log(event)
+        // let final_value = event.target.value.split("%")[0]
+        if (event<=5000) {
+            setTaux(event)
+        }
+        
     }
 
     return (
@@ -138,7 +145,10 @@ export default function Brisage() {
                             {item.name_fr &&
                                 <InputGroup size='lg'>
                                     <InputLeftAddon children='Taux' />
-                                    <Input placeholder='Entre un pourcentage' value={taux} className={brisage_styles.input__percent} onChange={(event) => handleChangeTaux(event)} />
+                                    <NumberInput step={1} defaultValue={100} min={1} max={5000} className={brisage_styles.input__percent} onChange={(event) => handleChangeTaux(event)}>
+                                        <NumberInputField />
+                                    </NumberInput>
+                                    {/* <Input type="number" max={4000} placeholder='Entre un pourcentage' value={taux} className={brisage_styles.input__percent} onChange={(event) => handleChangeTaux(event)} /> */}
                                     {/* <InputRightAddon children='%' /> */}
                                     <Tooltip label="Sauvegarde ton taux pour aider la communauté" aria-label='save_tooltip'>
                                         <InputRightAddon children='Save' onClick={handleResultSelect} className={brisage_styles.input__right} />

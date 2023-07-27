@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export async function calculBrisage(item: any, setItemEffect: any) {
+export async function calculBrisage(item: any, setItemEffect: any, taux: any) {
 
     console.log(item)
     axios({
@@ -11,7 +11,7 @@ export async function calculBrisage(item: any, setItemEffect: any) {
         .then((response) => {
             if (response.status == 200) {
                 console.log("enter", response)
-                let arraywithrunescalc = calculFullWeight(response.data.item_effect, item.level)
+                let arraywithrunescalc = calculFullWeight(response.data.item_effect, item.level, taux)
                 setItemEffect(arraywithrunescalc)
             }
             else {
@@ -23,15 +23,15 @@ export async function calculBrisage(item: any, setItemEffect: any) {
         });
 }
 
-function calculFullWeight(item: any, level: any) {
+function calculFullWeight(item: any, level: any, taux: any) {
     const total_weight = calculTotalWeight(item)
     let sansfocus = 0
     let avecfocus = 0
     let toReturnArray = []
     for (let i = 0; i < item.length; i++) {
         // console.log(element)
-        sansfocus = calculSansFocus(item[i], level, 100)
-        avecfocus = calculFocus(item[i], level, 100, total_weight)
+        sansfocus = calculSansFocus(item[i], level, taux)
+        avecfocus = calculFocus(item[i], level, taux, total_weight)
         toReturnArray.push({"runes":item[i].desc_fr, "stat":item[i].max,"avecfocus":avecfocus.toFixed(2), "sansfocus": sansfocus})
     }
     console.log(toReturnArray)
