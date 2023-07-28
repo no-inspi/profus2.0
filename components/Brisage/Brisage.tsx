@@ -45,6 +45,7 @@ const Item = (item: any) => {
 
 export default function Brisage() {
     const [item, setItem] = useState({})
+    const [itemStat, setItemStat] = useState([])
     const [itemEffect, setItemEffect] = useState([])
     const [taux, setTaux] = useState("100")
     const [isLoading, setisLoading] = useState(false)
@@ -72,15 +73,16 @@ export default function Brisage() {
 
     useEffect(() => {
         if (item !== "undefined") {
-            calculBrisage(item, setItemEffect, taux)
+            calculBrisage(item, setItemEffect, taux, itemStat)
         }
         
-    }, [item, taux])
+    }, [item, taux, itemStat])
 
     function onValueChange(event: any) {
         if (typeof event !== "undefined") {
             
             setItem(event)
+            
         }
     }
 
@@ -164,7 +166,7 @@ export default function Brisage() {
                         <i className={`${global_styles.stat} ${global_styles.stat_eau}`}></i>
                         <i className={`${global_styles.stat} ${global_styles.stat_agilite}`}></i>
                         <i className={`${global_styles.stat} ${global_styles.stat_neutre}`}></i> */}
-                            <RunesTable itemEffect={itemEffect} />
+                            <RunesTable itemEffect={itemEffect}  setItemStat={setItemStat} itemStat={itemStat}/>
                         </div>
                     }
                 </div>

@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-export async function calculBrisage(item: any, setItemEffect: any, taux: any) {
+export async function calculBrisage(item: any, setItemEffect: any, taux: any, itemStat: any) {
 
-    console.log(item)
+    console.log(itemStat)
     axios({
         method: 'get',
         url: "http://localhost:3001/items/item_effect?id="+item.id,
@@ -10,9 +10,10 @@ export async function calculBrisage(item: any, setItemEffect: any, taux: any) {
     })
         .then((response) => {
             if (response.status == 200) {
-                console.log("enter", response)
-                let arraywithrunescalc = calculFullWeight(response.data.item_effect, item.level, taux)
-                setItemEffect(arraywithrunescalc)
+                let sansfocus = calculSansFocus(response.data.item_effect, item.level, taux, itemStat)
+                let avecfocus = calculFocus(response.data.item_effect, item.level, taux, itemStat)
+                const sum = sumRunesSansFocus(sansfocus)
+                setItemEffect([response.data.item_effect, sansfocus, avecfocus, sum])
             }
             else {
                 console.log("error on signup")
@@ -23,62 +24,76 @@ export async function calculBrisage(item: any, setItemEffect: any, taux: any) {
         });
 }
 
-function calculFullWeight(item: any, level: any, taux: any) {
-    const total_weight = calculTotalWeight(item)
-    let sansfocus = 0
-    let avecfocus = 0
-    let toReturnArray = []
-    for (let i = 0; i < item.length; i++) {
-        // console.log(element)
-        sansfocus = calculSansFocus(item[i], level, taux)
-        avecfocus = calculFocus(item[i], level, taux, total_weight)
-        toReturnArray.push({"runes":item[i].desc_fr, "stat":item[i].max,"avecfocus":avecfocus.toFixed(2), "sansfocus": sansfocus})
+
+function sumRunesSansFocus(items: any) {
+    console.log(items)
+    var total = 0
+    for (let i = 0; i < items.length; i++) {
+        total += items[i]
     }
-    console.log(toReturnArray)
-    return toReturnArray
+    return total
 }
 
 
-
-function calculSansFocus(item: any, level: any, coefficient: any) {
+function calculFocus(item: any, level: any, coefficient: any, itemStat: any) {
+    let WeightArray = []
+    let AvecFocus = []
+    let totalWeight = 0
     
-    
-    let runeWeight = item.power
-    // if (item.desc_fr == "Vitalité" || item.desc_fr == "Initiative" || item.desc_fr == "Pods") {
-    //     runeWeight = 1
-    // }
-    // else {
-    //     runeWeight = item.power
-    // }
-    let lineWeight = (item.max)*(item.power)
-
-    const sansfocus = (lineWeight / runeWeight)*(level*0.025) * (coefficient/100)
-    return sansfocus
-}
-
-function calculFocus(item: any, level: any, coefficient: any, total_weight: any) {
-
-    let lineWeight = (item.max)*(item.power)
-    let runeWeight = 0
-    if (item.desc_fr == "Vitalité" || item.desc_fr == "Initiative" || item.desc_fr == "Pods") {
-        runeWeight = 1
-    }
-    else {
-        runeWeight = item.power
-    }
-    // if (item.desc_fr == "Vitalité") {lineWeight=item.max/5}
-
-    // const avecfocus = (((total_weight-lineWeight)/2)+lineWeight)*(level*0.025)*(coefficient/100)*0.55
-    const avecfocus = ((lineWeight+(total_weight-lineWeight)/2)/runeWeight)*(level*0.025)*(coefficient/100);
-    return avecfocus
-
-}
-
-function calculTotalWeight(item: any) {
-    let total_weight = 0
     for (let i = 0; i < item.length; i++) {
-        total_weight+=item[i].max*item[i].power
+        if (itemStat.length == 0) {
+            var calculPoidsLigne = ((3*item[i].min*item[i].power*level)/200)+1
+        }
+        else {
+            var calculPoidsLigne = ((3*itemStat[i]*item[i].power*level)/200)+1
+        }
+        totalWeight+=calculPoidsLigne
+        if (item[i].desc_fr == "Vitalité" || item[i].desc_fr == "Initiative" || item[i].desc_fr == "Pods") {
+            WeightArray.push({"poids": 1,"poidsLigne": calculPoidsLigne})
+        }
+        else {
+            WeightArray.push({"poids": item[i].power,"poidsLigne": calculPoidsLigne})
+        }
         
     }
-    return total_weight
+   
+    for (let j = 0; j < WeightArray.length; j++) {
+        var value = (WeightArray[j].poidsLigne+((totalWeight-WeightArray[j].poidsLigne)/2))*coefficient/100/WeightArray[j].poids
+        AvecFocus.push(Math.floor(value))
+        
+    }
+    console.log(AvecFocus)
+    return AvecFocus
+}
+
+function calculSansFocus(item: any, level: any, coefficient: any, itemStat: any) {
+    let WeightArray = []
+    let sansFocus = []
+    let totalWeight = 0
+
+    for (let i = 0; i < item.length; i++) {
+        if (itemStat.length == 0) {
+            var calculPoidsLigne = ((3*item[i].min*item[i].power*level)/200)+1
+        }
+        else {
+            var calculPoidsLigne = ((3*itemStat[i]*item[i].power*level)/200)+1
+        }
+        totalWeight+=calculPoidsLigne
+        if (item[i].desc_fr == "Vitalité" || item[i].desc_fr == "Initiative" || item[i].desc_fr == "Pods") {
+            WeightArray.push({"poids": 1,"poidsLigne": calculPoidsLigne})
+        }
+        else {
+            WeightArray.push({"poids": item[i].power,"poidsLigne": calculPoidsLigne})
+        }
+        
+    }
+
+    for (let j = 0; j < WeightArray.length; j++) {
+        var value =(WeightArray[j].poidsLigne)*coefficient/100/WeightArray[j].poids
+        sansFocus.push(Math.floor(value))
+        
+    }
+    console.log(sansFocus)
+    return sansFocus
+
 }
