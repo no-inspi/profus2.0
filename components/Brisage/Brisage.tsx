@@ -72,15 +72,20 @@ export default function Brisage() {
     }
 
     useEffect(() => {
+        
         if (item !== "undefined") {
+            console.log("enter in brisage")
             calculBrisage(item, setItemEffect, taux, itemStat)
         }
         
     }, [item, taux, itemStat])
 
     function onValueChange(event: any) {
-        if (typeof event !== "undefined") {
-            
+        console.log(item, event)
+        if (typeof event !== "undefined" && item!=event) {
+            console.log("enter in value change event")
+            Cookies.set("newitem", "true")
+            console.log(Cookies.get("newitem"))
             setItem(event)
             
         }
@@ -159,7 +164,7 @@ export default function Brisage() {
                             }
                         </div>
                     </div>
-                    {item.name_fr &&
+                    {(item.name_fr && itemEffect[0]) &&
                         <div className={brisage_styles.container_table}>
                             {/* <i className={`${global_styles.stat} ${global_styles.stat_vitalite}`}></i>
                         <i className={`${global_styles.stat} ${global_styles.stat_force}`}></i>

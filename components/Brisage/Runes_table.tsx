@@ -8,6 +8,8 @@ import {
     Button
 } from '@chakra-ui/react'
 
+import Cookies from 'js-cookie';
+
 import {useState, useEffect} from 'react'
 
 import styles from "./RunesTable.module.css"
@@ -15,10 +17,10 @@ import global_styles from "../global/global.module.css"
 
 export default function RunesTable({itemEffect, setItemStat, itemStat}:any) {
     const [stats, setStats] = useState([])
+
     
     useEffect(() => {
-
-        if (itemEffect.length != 0 && itemStat.length==0) {
+        if ((itemEffect.length != 0 && itemStat.length==0) || Cookies.get("newitem") == "true") {
             let min_array = []
             for (let j = 0; j < itemEffect[0].length; j++) {
                 min_array.push(itemEffect[0][j].min)
@@ -31,7 +33,7 @@ export default function RunesTable({itemEffect, setItemStat, itemStat}:any) {
     }, [itemEffect])
 
     function handleStat(event: any, i:any) {
-        console.log(stats)
+        console.log("change stats in runes table: ")
         let temp_state:any;
         temp_state = [...stats];
         let temp_element:any;
@@ -39,9 +41,8 @@ export default function RunesTable({itemEffect, setItemStat, itemStat}:any) {
         temp_element = temp_state[i];
         temp_element = Number(event.target.value);
 
-        console.log(temp_element)
         temp_state[i] = temp_element;
-        console.log(temp_state)
+        Cookies.set("newitem", "false")
         setStats(temp_state)
         setItemStat(temp_state)
     }

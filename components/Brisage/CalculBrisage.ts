@@ -1,8 +1,8 @@
 import axios from 'axios'
+import Cookies from 'js-cookie';
 
 export async function calculBrisage(item: any, setItemEffect: any, taux: any, itemStat: any) {
 
-    console.log(itemStat)
     axios({
         method: 'get',
         url: "http://localhost:3001/items/item_effect?id="+item.id,
@@ -16,7 +16,6 @@ export async function calculBrisage(item: any, setItemEffect: any, taux: any, it
                 setItemEffect([response.data.item_effect, sansfocus, avecfocus, sum])
             }
             else {
-                console.log("error on signup")
             }
 
         }, (error) => {
@@ -26,7 +25,6 @@ export async function calculBrisage(item: any, setItemEffect: any, taux: any, it
 
 
 function sumRunesSansFocus(items: any) {
-    console.log(items)
     var total = 0
     for (let i = 0; i < items.length; i++) {
         total += items[i]
@@ -41,7 +39,7 @@ function calculFocus(item: any, level: any, coefficient: any, itemStat: any) {
     let totalWeight = 0
     
     for (let i = 0; i < item.length; i++) {
-        if (itemStat.length == 0) {
+        if (itemStat.length == 0 || Cookies.get("newitem") == "true") {
             var calculPoidsLigne = ((3*item[i].min*item[i].power*level)/200)+1
         }
         else {
@@ -62,7 +60,6 @@ function calculFocus(item: any, level: any, coefficient: any, itemStat: any) {
         AvecFocus.push(Math.floor(value))
         
     }
-    console.log(AvecFocus)
     return AvecFocus
 }
 
@@ -72,7 +69,7 @@ function calculSansFocus(item: any, level: any, coefficient: any, itemStat: any)
     let totalWeight = 0
 
     for (let i = 0; i < item.length; i++) {
-        if (itemStat.length == 0) {
+        if (itemStat.length == 0|| Cookies.get("newitem") == "true") {
             var calculPoidsLigne = ((3*item[i].min*item[i].power*level)/200)+1
         }
         else {
@@ -93,7 +90,6 @@ function calculSansFocus(item: any, level: any, coefficient: any, itemStat: any)
         sansFocus.push(Math.floor(value))
         
     }
-    console.log(sansFocus)
     return sansFocus
 
 }
