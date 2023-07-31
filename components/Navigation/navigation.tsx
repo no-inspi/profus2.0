@@ -138,7 +138,7 @@ export default function Navigation() {
     const scrollTop = window.scrollY;
     const stickyClass = scrollTop >= 10 ? styles.is_sticky : "";
     setSticky(stickyClass);
-    console.log(stickyClass);
+  
   };
 
   const handleClick = () => {

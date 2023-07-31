@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react"
-import { Input, InputGroup, InputLeftAddon, InputRightAddon, useToast, Tooltip, Select, NumberInput, NumberInputField  } from "@chakra-ui/react"
+import { Input, InputGroup, InputLeftAddon, InputRightAddon, useToast, Tooltip, Select, NumberInput, NumberInputField } from "@chakra-ui/react"
 import Turnstone from 'turnstone'
 import recentSearchesPlugin from 'turnstone-recent-searches'
 import styles from "./SearchBar.module.css"
 import brisage_styles from "./Brisage.module.css"
 import global_styles from "../global/global.module.css"
-
+import axios from 'axios';
 import Cookies from 'js-cookie';
 
 import RunesTable from "./Runes_table"
 import { calculBrisage } from "./CalculBrisage"
+import GraphicBrisageTaux from "./GraphicBrisageTaux"
 
 const style = {
     input: styles.searchbox,
@@ -53,7 +54,7 @@ export default function Brisage() {
 
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer " + Cookies.get('accessToken'));
-    
+
     var requestOptions = {
         method: 'GET',
         headers: myHeaders,
@@ -72,27 +73,72 @@ export default function Brisage() {
     }
 
     useEffect(() => {
-        
-        if (item !== "undefined") {
-            console.log("enter in brisage")
+
+        // const getTaux = async (id_item: any) => {
+        //     var runesPrice = await axios({
+        //         method: 'get',
+        //         url: "http://localhost:3001/items/item_taux?id=" + id_item,
+        //         headers: {},
+        //     })
+        //         .then((response) => {
+        //             if (response.status == 200) {
+        //                 console.log("got it", response.data)
+        //                 if (response.data.length != 0) {
+        //                     console.log("enter in")
+        //                     setTaux(response.data[0].taux)
+        //                     return response.data[0].taux.toString()
+        //                 }
+        //                 else {
+        //                     setTaux("100")
+        //                     return "100"
+        //                 }
+        //             }
+        //             else {
+        //             }
+
+        //         }, (error) => {
+        //             console.log(error);
+        //         });
+        // }
+
+        if (Object.keys(item).length !== 0) {
+
             calculBrisage(item, setItemEffect, taux, itemStat)
+
+            console.log(taux)
+
         }
-        
+
     }, [item, taux, itemStat])
 
     function onValueChange(event: any) {
         console.log(item, event)
-        if (typeof event !== "undefined" && item!=event) {
+        if (typeof event !== "undefined" && item != event) {
             console.log("enter in value change event")
             Cookies.set("newitem", "true")
             console.log(Cookies.get("newitem"))
             setItem(event)
-            
+
         }
     }
 
-    const handleResultSelect = () => {
-        console.log("in select")
+    const handleResultSelect = (event: any) => {
+        var tauxresp = axios({
+            method: 'get',
+            url: `http://localhost:3001/items/add_item_taux?id=${item.id}&taux=${taux}&serverid=208`,
+            headers: {},
+        })
+            .then((response) => {
+                if (response.status == 200) {
+                    console.log(response.data)
+                }
+                else {
+                }
+
+            }, (error) => {
+                console.log(error);
+            });
+
         toast({
             title: 'Mise à jour faite !',
             description: "Le taux a bien été mit à jour ! Merci !",
@@ -103,12 +149,9 @@ export default function Brisage() {
     }
 
     const handleChangeTaux = (event: any) => {
-        console.log(event)
-        // let final_value = event.target.value.split("%")[0]
-        if (event<=5000) {
+        if (event <= 5000) {
             setTaux(event)
         }
-        
     }
 
     return (
@@ -152,7 +195,7 @@ export default function Brisage() {
                             {item.name_fr &&
                                 <InputGroup size='lg'>
                                     <InputLeftAddon children='Taux' />
-                                    <NumberInput step={1} defaultValue={100} min={1} max={5000} className={brisage_styles.input__percent} onChange={(event) => handleChangeTaux(event)}>
+                                    <NumberInput step={1} value={taux} min={1} max={5000} className={brisage_styles.input__percent} onChange={(event) => handleChangeTaux(event)}>
                                         <NumberInputField />
                                     </NumberInput>
                                     {/* <Input type="number" max={4000} placeholder='Entre un pourcentage' value={taux} className={brisage_styles.input__percent} onChange={(event) => handleChangeTaux(event)} /> */}
@@ -171,10 +214,13 @@ export default function Brisage() {
                         <i className={`${global_styles.stat} ${global_styles.stat_eau}`}></i>
                         <i className={`${global_styles.stat} ${global_styles.stat_agilite}`}></i>
                         <i className={`${global_styles.stat} ${global_styles.stat_neutre}`}></i> */}
-                            <RunesTable itemEffect={itemEffect}  setItemStat={setItemStat} itemStat={itemStat}/>
+                            <RunesTable itemEffect={itemEffect} setItemStat={setItemStat} itemStat={itemStat} />
                         </div>
                     }
                 </div>
+                {item.id ? <GraphicBrisageTaux item={item} /> : null}
+                
+
 
             </div>
 

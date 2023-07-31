@@ -2,7 +2,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie';
 
 export async function calculBrisage(item: any, setItemEffect: any, taux: any, itemStat: any) {
-
+    console.log(taux)
     axios({
         method: 'get',
         url: "http://localhost:3001/items/item_effect?id="+item.id,

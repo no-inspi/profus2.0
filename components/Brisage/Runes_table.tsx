@@ -38,7 +38,7 @@ export default function RunesTable({ itemEffect, setItemStat, itemStat }: any) {
                 })
                     .then((response) => {
                         if (response.status == 200) {
-                            console.log(response.data.price)
+                            // console.log(response.data.price)
                             price_array.push(response.data.price)
                             totalSansFocusTmp+= response.data.price*itemEffectTmp[1][j]
                         }
@@ -66,7 +66,6 @@ export default function RunesTable({ itemEffect, setItemStat, itemStat }: any) {
 
             }
             
-            console.log("int")
             setStats(min_array)
         }
         if (itemEffect.length != 0) {
