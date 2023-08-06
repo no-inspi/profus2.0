@@ -49,3 +49,12 @@
     align-items: center;
     gap: 20px;
 }
+
+.brisage__server {
+    color: white;
+    background-color: #1b2430;
+}
+
+.option__select {
+    color: #1b2430;
+}

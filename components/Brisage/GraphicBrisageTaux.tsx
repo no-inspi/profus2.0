@@ -39,6 +39,7 @@ export default function GraphicBrisageTaux({ item, data }: any) {
     const [dataTaux, setDataTaux] = useState([])
     const [dataRunePrice, setDataRunePrice] = useState([])
     const [loading, setLoading] = useState(true)
+    const [server, setServer] = useState({"id": 36, "name": "Imagiro"})
 
     useEffect(() => {
         var tauxresp = axios({
@@ -113,11 +114,11 @@ export default function GraphicBrisageTaux({ item, data }: any) {
                             </ResponsiveContainer>
                         </div>
                         <div className={styles.graph_container_withselect}>
-                            <div>
-                                <Select placeholder='Select option'>
-                                    <option value='option1'>Option 1</option>
-                                    <option value='option2'>Option 2</option>
-                                    <option value='option3'>Option 3</option>
+                            <div className={styles.brisage__server}>
+                                <Select >
+                                    <option value='Imagiro' className={styles.option__select}>Imagiro</option>
+                                    <option value='Draconiros' className={styles.option__select}>Draconiros</option>
+                                    <option value='Tylezia' className={styles.option__select}>Tylezia</option>
                                 </Select>
                             </div>
                             <ResponsiveContainer width="100%" height="100%">
