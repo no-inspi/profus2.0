@@ -51,6 +51,7 @@ export default function NewBrisage() {
     const [runePrice, setRunePrice] = useState([])
     const [objectToDisplay, setItemToDisplay] = useState({})
     const [taux, setTaux] = useState("100")
+    const [tauxValue, setTauxValue] = useState("100")
     const [isLoading, setisLoading] = useState(true)
     const toast = useToast()
 
@@ -148,8 +149,15 @@ export default function NewBrisage() {
     }
 
     const handleChangeTaux = (event: any) => {
+        console.log("change taux", event.target.value)
+        if (event.target.value <= 5000) {
+            setTaux(event.target.value)
+        }
+    }
+
+    const handleChangeTauxValue = (event: any) => {
         if (event <= 5000) {
-            setTaux(event)
+            setTauxValue(event)
         }
     }
 
@@ -187,34 +195,36 @@ export default function NewBrisage() {
                         />
                     </div>
                     <div>
-                        {!item.name_fr ? null : 
-                        <>
-                        {isLoading ? <Spinner color='red.500' size='xl' /> :
+                        {!item.name_fr ? null :
                             <>
-                                <div className={brisage_styles.item__container}>
-                                    <div className={brisage_styles.item__display}>
-                                        {item.name_fr} lvl. {item.level}
-                                    </div>
-                                    <div>
-                                        <InputGroup size='lg'>
-                                            <InputLeftAddon children='Taux' />
-                                            <NumberInput step={1} value={taux} min={1} max={5000} className={brisage_styles.input__percent} onChange={(event) => handleChangeTaux(event)}>
-                                                <NumberInputField />
-                                            </NumberInput>
-                                            <Tooltip label="Sauvegarde ton taux pour aider la communauté" aria-label='save_tooltip'>
-                                                <InputRightAddon children='Save' onClick={handleResultSelect} className={brisage_styles.input__right} />
-                                            </Tooltip>
-                                        </InputGroup>
+                                {isLoading ? <Spinner color='red.500' size='xl' /> :
+                                    <>
+                                        <div className={brisage_styles.item__container}>
+                                            <div className={brisage_styles.item__display}>
+                                                {item.name_fr} lvl. {item.level}
+                                            </div>
+                                            <div>
+                                                <InputGroup size='lg'>
+                                                    <InputLeftAddon children='Taux' />
+                                                    <NumberInput step={1} value={tauxValue} min={1} max={5000} className={brisage_styles.input__percent}
+                                                        onBlur={(event) => handleChangeTaux(event)}
+                                                        onChange={(event) => handleChangeTauxValue(event)}>
+                                                        <NumberInputField />
+                                                    </NumberInput>
+                                                    <Tooltip label="Sauvegarde ton taux pour aider la communauté" aria-label='save_tooltip'>
+                                                        <InputRightAddon children='Save' onClick={handleResultSelect} className={brisage_styles.input__right} />
+                                                    </Tooltip>
+                                                </InputGroup>
 
-                                    </div>
-                                </div>
-                                <div className={brisage_styles.container_table}>
-                                    <NewRunesTable data={objectToDisplay} stats={stats} runePrice={runePrice} setStats={setStats} setRunePrice={setRunePrice} item={item} />
-                                </div>
+                                            </div>
+                                        </div>
+                                        <div className={brisage_styles.container_table}>
+                                            <NewRunesTable data={objectToDisplay} stats={stats} runePrice={runePrice} setStats={setStats} setRunePrice={setRunePrice} item={item} />
+                                        </div>
+                                    </>
+                                }
                             </>
                         }
-                        </>
-                    }
                     </div>
                 </div>
                 {item.id ? <GraphicBrisageTaux item={item} data={objectToDisplay} /> : null}
