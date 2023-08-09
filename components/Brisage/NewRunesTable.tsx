@@ -18,6 +18,14 @@ import global_styles from "../global/global.module.css"
 
 export default function NewRunesTable({ data, stats, runePrice, setStats, setRunePrice, item }: any) {
     const [totalSansFocus, setTotalSansFocus] = useState(0)
+    const [statsIntern, setStatsIntern] = useState([])
+    const [RunesPriceIntern, setRunesPriceIntern] = useState([])
+
+    useEffect(() => {
+        console.log(data)
+        setStatsIntern(data.stats)
+        setRunesPriceIntern(data.runesPrice)
+    })
 
     function handleTest() {
         console.log("test")
@@ -25,25 +33,25 @@ export default function NewRunesTable({ data, stats, runePrice, setStats, setRun
     }
 
     function handleStat(event: any, id_rune: any, i: any) {
-        console.log(stats)
         let temp_state: any;
 
         temp_state = [...stats];
+        console.log(event.target.value)
 
         data.stats[i].value = event.target.value
 
-        console.log("enter test")
-        const isIn = temp_state.find(({ id }: any) => id === id_rune)
+        console.log("enter test", id_rune)
+        const isIn = temp_state.find(({ id }: any) => Number(id) === Number(id_rune))
         console.log(isIn)
         if (isIn != undefined) {
             console.log("enter not undefined")
-            const idToUpdate = temp_state.findIndex(({ id }: any) => id === id_rune)
+            const idToUpdate = temp_state.findIndex(({ id }: any) =>  Number(id) ===  Number(id_rune))
             temp_state[idToUpdate].value = event.target.value
             setStats(temp_state)
         }
         else {
             console.log("enter undefined")
-            temp_state.push({ "id": id_rune, "value": event.target.value })
+            temp_state.push({ "id": Number(id_rune), "value": event.target.value })
             setStats(temp_state)
         }
         console.log(temp_state)
@@ -51,19 +59,41 @@ export default function NewRunesTable({ data, stats, runePrice, setStats, setRun
         // 
     }
 
+    function handleChangeStat(event: any, i: any) {
+        console.log(event.target.value, statsIntern)
+        let temp_state: any;
+
+        temp_state = [...statsIntern];
+
+        temp_state[i].value = event.target.value
+
+        setStatsIntern(temp_state);
+    }
+
+    function handleChangeRunePrice(event: any, i: any) {
+        console.log(event.target.value, RunesPriceIntern)
+        let temp_state: any;
+
+        temp_state = [...RunesPriceIntern];
+
+        temp_state[i].price = event.target.value
+
+        setRunesPriceIntern(temp_state);
+    }
+
     function handleRunes(event: any, id_rune: any, i: any) {
         let temp_state: any;
 
         temp_state = [...runePrice];
-        console.log(data)
+        
         data.runesPrice[i].value = event.target.value
 
         console.log("enter test")
-        const isIn = temp_state.find(({ id }: any) => id === id_rune)
+        const isIn = temp_state.find(({ id }: any) =>  Number(id) ===  Number(id_rune))
         console.log(isIn)
         if (isIn != undefined) {
             console.log("enter not undefined")
-            const idToUpdate = temp_state.findIndex(({ id }: any) => id === id_rune)
+            const idToUpdate = temp_state.findIndex(({ id }: any) =>  Number(id) ===  Number(id_rune))
             temp_state[idToUpdate].value = event.target.value
             setRunePrice(temp_state)
         }
@@ -77,6 +107,7 @@ export default function NewRunesTable({ data, stats, runePrice, setStats, setRun
 
     return (
         <>
+        {statsIntern[0] && RunesPriceIntern[0] ? 
             <table className={styles.table__container}>
                 <thead>
                     <tr>
@@ -99,14 +130,16 @@ export default function NewRunesTable({ data, stats, runePrice, setStats, setRun
                                 </td>
                                 <td>
                                     <div className={styles.input_container}>
-                                        <Input placeholder='10' className={styles.nb_input} size='sm' htmlSize={6} width='auto' focusBorderColor='#01785E' value={object.value}
-                                            onChange={(event) => handleStat(event, object.id_rune, i)} />
+                                        <Input placeholder='10' className={styles.nb_input} size='sm' htmlSize={6} width='auto' focusBorderColor='#01785E' value={statsIntern[i].value}
+                                            onBlur={(event) => handleStat(event, object.id_rune, i)} 
+                                            onChange={(event) => handleChangeStat(event, i)} />
                                     </div>
                                 </td>
                                 <td>
                                     <div className={styles.input_container}>
-                                        <Input placeholder='10' className={styles.nb_input} size='sm' htmlSize={6} width='auto' focusBorderColor='#01785E' value={data.runesPrice[i].price}
-                                            onChange={(event) => handleRunes(event, object.id_rune, i)} />
+                                        <Input placeholder='10' className={styles.nb_input} size='sm' htmlSize={6} width='auto' focusBorderColor='#01785E' value={RunesPriceIntern[i].price}
+                                            onBlur={(event) => handleRunes(event, object.id_rune, i)} 
+                                            onChange={(event) => handleChangeRunePrice(event, i)}/>
                                     </div>
                                 </td>
                                 <td>{data.quantityWithFocus[i]}</td>
@@ -129,6 +162,7 @@ export default function NewRunesTable({ data, stats, runePrice, setStats, setRun
                     </tr>
                 </tfoot>
             </table>
+            : null}
         </>
     )
 }

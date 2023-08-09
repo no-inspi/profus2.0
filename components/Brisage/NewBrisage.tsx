@@ -187,6 +187,8 @@ export default function NewBrisage() {
                         />
                     </div>
                     <div>
+                        {!item.name_fr ? null : 
+                        <>
                         {isLoading ? <Spinner color='red.500' size='xl' /> :
                             <>
                                 <div className={brisage_styles.item__container}>
@@ -211,6 +213,8 @@ export default function NewBrisage() {
                                 </div>
                             </>
                         }
+                        </>
+                    }
                     </div>
                 </div>
                 {item.id ? <GraphicBrisageTaux item={item} data={objectToDisplay} /> : null}
