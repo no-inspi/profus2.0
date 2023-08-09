@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Input, InputGroup, InputLeftAddon, InputRightAddon, useToast, Tooltip, Select, NumberInput, NumberInputField } from "@chakra-ui/react"
+import { Input, InputGroup, InputLeftAddon, InputRightAddon, useToast, Tooltip, Select, NumberInput, NumberInputField, Spinner } from "@chakra-ui/react"
 import Turnstone from 'turnstone'
 import recentSearchesPlugin from 'turnstone-recent-searches'
 import styles from "./SearchBar.module.css"
@@ -47,11 +47,11 @@ const Item = (item: any) => {
 
 export default function NewBrisage() {
     const [item, setItem] = useState({})
-    const [stats, setStats] = useState([{"id": 18206, "value": 355}])
+    const [stats, setStats] = useState([{ "id": 18206, "value": 355 }])
     const [runePrice, setRunePrice] = useState([])
     const [objectToDisplay, setItemToDisplay] = useState({})
     const [taux, setTaux] = useState("100")
-    const [isLoading, setisLoading] = useState(false)
+    const [isLoading, setisLoading] = useState(true)
     const toast = useToast()
 
     var myHeaders = new Headers();
@@ -76,14 +76,14 @@ export default function NewBrisage() {
 
     useEffect(() => {
         console.log(stats, runePrice)
-        if (typeof item.name_fr !== "undefined" ) {
+        if (typeof item.name_fr !== "undefined") {
 
-
+            console.log(item)
             let dataParams = JSON.stringify({
                 "stats": stats,
                 "runesPrice": runePrice,
                 "taux": taux,
-                "item_id": item.id
+                "item_id": item.id_
             });
             console.log(dataParams)
             let config = {
@@ -96,11 +96,12 @@ export default function NewBrisage() {
                 },
                 data: dataParams
             };
-
+            setisLoading(true)
             axios.request(config)
                 .then((response) => {
                     console.log(response.data);
                     setItemToDisplay(response.data)
+                    setisLoading(false)
                 })
                 .catch((error) => {
                     console.log(error);
@@ -185,38 +186,34 @@ export default function NewBrisage() {
                             onSelect={(event: any) => onValueChange(event)}
                         />
                     </div>
-                    <div className={brisage_styles.item__container}>
-                        <div className={brisage_styles.item__display}>
-                            {item.name_fr ? (item.name_fr + " lvl." + item.level) : null}
-                        </div>
-                        <div>
-                            {item.name_fr &&
-                                <InputGroup size='lg'>
-                                    <InputLeftAddon children='Taux' />
-                                    <NumberInput step={1} value={taux} min={1} max={5000} className={brisage_styles.input__percent} onChange={(event) => handleChangeTaux(event)}>
-                                        <NumberInputField />
-                                    </NumberInput>
-                                    {/* <Input type="number" max={4000} placeholder='Entre un pourcentage' value={taux} className={brisage_styles.input__percent} onChange={(event) => handleChangeTaux(event)} /> */}
-                                    {/* <InputRightAddon children='%' /> */}
-                                    <Tooltip label="Sauvegarde ton taux pour aider la communauté" aria-label='save_tooltip'>
-                                        <InputRightAddon children='Save' onClick={handleResultSelect} className={brisage_styles.input__right} />
-                                    </Tooltip>
-                                </InputGroup>
-                            }
-                        </div>
+                    <div>
+                        {isLoading ? <Spinner color='red.500' size='xl' /> :
+                            <>
+                                <div className={brisage_styles.item__container}>
+                                    <div className={brisage_styles.item__display}>
+                                        {item.name_fr} lvl. {item.level}
+                                    </div>
+                                    <div>
+                                        <InputGroup size='lg'>
+                                            <InputLeftAddon children='Taux' />
+                                            <NumberInput step={1} value={taux} min={1} max={5000} className={brisage_styles.input__percent} onChange={(event) => handleChangeTaux(event)}>
+                                                <NumberInputField />
+                                            </NumberInput>
+                                            <Tooltip label="Sauvegarde ton taux pour aider la communauté" aria-label='save_tooltip'>
+                                                <InputRightAddon children='Save' onClick={handleResultSelect} className={brisage_styles.input__right} />
+                                            </Tooltip>
+                                        </InputGroup>
+
+                                    </div>
+                                </div>
+                                <div className={brisage_styles.container_table}>
+                                    <NewRunesTable data={objectToDisplay} stats={stats} runePrice={runePrice} setStats={setStats} setRunePrice={setRunePrice} item={item} />
+                                </div>
+                            </>
+                        }
                     </div>
-                    {(objectToDisplay.stats) &&
-                        <div className={brisage_styles.container_table}>
-                            {/* <i className={`${global_styles.stat} ${global_styles.stat_vitalite}`}></i>
-                        <i className={`${global_styles.stat} ${global_styles.stat_force}`}></i>
-                        <i className={`${global_styles.stat} ${global_styles.stat_eau}`}></i>
-                        <i className={`${global_styles.stat} ${global_styles.stat_agilite}`}></i>
-                        <i className={`${global_styles.stat} ${global_styles.stat_neutre}`}></i> */}
-                            <NewRunesTable data={objectToDisplay} stats={stats} runePrice={runePrice} setStats={setStats} setRunePrice={setRunePrice} item={item} />
-                        </div>
-                    }
                 </div>
-                {item.id ? <GraphicBrisageTaux item={item}  data={objectToDisplay}/> : null}
+                {item.id ? <GraphicBrisageTaux item={item} data={objectToDisplay} /> : null}
 
 
 

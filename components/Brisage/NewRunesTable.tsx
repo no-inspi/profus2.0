@@ -99,13 +99,13 @@ export default function NewRunesTable({ data, stats, runePrice, setStats, setRun
                                 </td>
                                 <td>
                                     <div className={styles.input_container}>
-                                        <Input placeholder='10' className={styles.nb_input} size='sm' htmlSize={4} width='auto' focusBorderColor='#01785E' value={object.value}
+                                        <Input placeholder='10' className={styles.nb_input} size='sm' htmlSize={6} width='auto' focusBorderColor='#01785E' value={object.value}
                                             onChange={(event) => handleStat(event, object.id_rune, i)} />
                                     </div>
                                 </td>
                                 <td>
                                     <div className={styles.input_container}>
-                                        <Input placeholder='10' className={styles.nb_input} size='sm' htmlSize={4} width='auto' focusBorderColor='#01785E' value={data.runesPrice[i].price}
+                                        <Input placeholder='10' className={styles.nb_input} size='sm' htmlSize={6} width='auto' focusBorderColor='#01785E' value={data.runesPrice[i].price}
                                             onChange={(event) => handleRunes(event, object.id_rune, i)} />
                                     </div>
                                 </td>
