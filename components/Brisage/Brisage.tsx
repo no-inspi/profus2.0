@@ -109,14 +109,16 @@ export default function Brisage() {
         //             console.log(error);
         //         });
         // }
+        if (item) {
+            if (Object.keys(item).length !== 0) {
 
-        if (Object.keys(item).length !== 0) {
+                calculBrisage(item, setItemEffect, taux, itemStat)
 
-            calculBrisage(item, setItemEffect, taux, itemStat)
+                console.log(taux)
 
-            console.log(taux)
-
+            }
         }
+
 
     }, [item, taux, itemStat])
 
@@ -134,7 +136,7 @@ export default function Brisage() {
     const handleResultSelect = (event: any) => {
         var tauxresp = axios({
             method: 'get',
-            url: `http://localhost:3001/items/add_item_taux?id=${item.id}&taux=${taux}&serverid=208`,
+            url: `http://localhost:3001/items/add_item_taux?id=${item?.id}&taux=${taux}&serverid=208`,
             headers: {},
         })
             .then((response) => {
