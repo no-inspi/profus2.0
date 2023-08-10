@@ -75,7 +75,7 @@ export default function NewBrisage() {
         displayField: 'name',
         data: async (query: any) => {
             const res = await fetch(
-                `http://localhost:3001/items/get_item_filter?contains=${query}`, requestOptions
+                `https://profus-api-1-0.vercel.app/items/get_item_filter?contains=${query}`, requestOptions
             )
             const data = await res.json()
             return data;
@@ -98,7 +98,7 @@ export default function NewBrisage() {
             let config = {
                 method: 'post',
                 maxBodyLength: Infinity,
-                url: 'http://localhost:3001/brisage/get_brisage_data',
+                url: 'https://profus-api-1-0.vercel.app/brisage/get_brisage_data',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY5MTIyMTIxMiwiZXhwIjoxNjkxMzA3NjEyfQ.LlRA3HfazhvQ-Q4g5K3YKHq3M-dOS07OWR2yeBPrX60'
@@ -133,7 +133,7 @@ export default function NewBrisage() {
     const handleResultSelect = (event: any) => {
         var tauxresp = axios({
             method: 'get',
-            url: `http://localhost:3001/items/add_item_taux?id=${item?.id}&taux=${taux}&serverid=208`,
+            url: `https://profus-api-1-0.vercel.app/items/add_item_taux?id=${item?.id}&taux=${taux}&serverid=208`,
             headers: {},
         })
             .then((response) => {

@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 function inscription(data: any, url: string, setIsConnected: any, onCloseSignup: any, toast: any) {
     axios({
         method: 'post',
-        url: "http://localhost:3001/auth/register",
+        url: "https://profus-api-1-0.vercel.app/auth/register",
         headers: {}, 
         data: {
             "email": data.email,

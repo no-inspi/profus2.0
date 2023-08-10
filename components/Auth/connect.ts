@@ -6,7 +6,7 @@ function connexion(data: any, url: string, setIsConnected: any, onCloseLogin: an
     console.log(data.pseudo)
     axios({
         method: 'post',
-        url: "http://localhost:3001/auth/login",
+        url: "https://profus-api-1-0.vercel.app/auth/login",
         headers: {}, 
         data: {
             "pseudo": data.pseudo,
