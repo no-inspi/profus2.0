@@ -205,14 +205,16 @@ export default function NewBrisage() {
                                             </div>
                                             <div>
                                                 <InputGroup size='lg'>
-                                                    <InputLeftAddon children='Taux' />
+                                                    {/*// eslint-disable-next-line react/no-children-prop*/}
+                                                    Taux
                                                     <NumberInput step={1} value={tauxValue} min={1} max={5000} className={brisage_styles.input__percent}
                                                         onBlur={(event) => handleChangeTaux(event)}
                                                         onChange={(event) => handleChangeTauxValue(event)}>
                                                         <NumberInputField />
                                                     </NumberInput>
                                                     <Tooltip label="Sauvegarde ton taux pour aider la communauté" aria-label='save_tooltip'>
-                                                        <InputRightAddon children='Save' onClick={handleResultSelect} className={brisage_styles.input__right} />
+                                                        {/*<InputRightAddon children='Save' onClick={handleResultSelect} className={brisage_styles.input__right} />*/}
+                                                        Save
                                                     </Tooltip>
                                                 </InputGroup>
 

@@ -194,14 +194,15 @@ export default function Brisage() {
                         <div>
                             {item.name_fr &&
                                 <InputGroup size='lg'>
-                                    <InputLeftAddon children='Taux' />
+                                    Taux
                                     <NumberInput step={1} value={taux} min={1} max={5000} className={brisage_styles.input__percent} onChange={(event) => handleChangeTaux(event)}>
                                         <NumberInputField />
                                     </NumberInput>
                                     {/* <Input type="number" max={4000} placeholder='Entre un pourcentage' value={taux} className={brisage_styles.input__percent} onChange={(event) => handleChangeTaux(event)} /> */}
                                     {/* <InputRightAddon children='%' /> */}
                                     <Tooltip label="Sauvegarde ton taux pour aider la communauté" aria-label='save_tooltip'>
-                                        <InputRightAddon children='Save' onClick={handleResultSelect} className={brisage_styles.input__right} />
+                                        {/*<InputRightAddon children='Save' onClick={handleResultSelect} className={brisage_styles.input__right} />*/}
+                                        Save
                                     </Tooltip>
                                 </InputGroup>
                             }
