@@ -2,6 +2,7 @@ import axios from "axios";
 import Cookies from 'js-cookie';
 
 function connexion(data: any, url: string, setIsConnected: any, onCloseLogin: any, toast: any) {
+  console.log("wtf")
     console.log(data.pseudo)
     axios({
         method: 'post',

@@ -157,6 +157,7 @@ export default function Navigation() {
   const handleShowPwd = () => setShow(!show)
 
   const deconnexion = () => {
+    
     Cookies.remove('accessToken')
     Cookies.remove('refreshToken')
     setIsConnected(false)
@@ -309,10 +310,10 @@ export default function Navigation() {
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme="green" mr={3} type="submit">
-                Connexion
-              </Button>
-              <Button colorScheme="blue" mr={3} onClick={onCloseLogin}>
+              
+              {/*<button className={`${stylesButton.button} ${stylesButton.white}`} style={{marginRight: 3}} onClick={onCloseLogin}> Quitter </button>*/}
+              <Button className={`${stylesButton.button}`} colorScheme='darkButton' mr={3} type="submit"> Connexion </Button>
+              <Button className={`${stylesButton.button} ${stylesButton.white}`} mr={3} onClick={onCloseLogin}>
                 Cancel
               </Button>
             </ModalFooter>

@@ -197,7 +197,7 @@ export default function NewBrisage() {
                     <div>
                         {!item.name_fr ? null :
                             <>
-                                {isLoading ? <Spinner color='red.500' size='xl' /> :
+                                {isLoading ? <Spinner color='red.500' size='xl' speed="0.7s"/> :
                                     <>
                                         <div className={brisage_styles.item__container}>
                                             <div className={brisage_styles.item__display}>

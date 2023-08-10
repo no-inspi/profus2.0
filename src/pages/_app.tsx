@@ -8,6 +8,11 @@ import { modalTheme } from '../../components/Navigation/modal'
 
 export const theme = extendTheme({
   components: { Modal: modalTheme },
+  colors: {
+    darkButton: {
+        500: '#0a0a0a',
+    }
+  }
 })
 
 export default function App({ Component, pageProps }: AppProps) {

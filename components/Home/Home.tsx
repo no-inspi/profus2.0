@@ -38,7 +38,7 @@ export default function Home() {
                     </h1>
                 </div>
                 <h2 className={styles.home__description}>
-                    Vercel's frontend cloud gives developers the frameworks, workflows, and infrastructure to build a faster, more personalized Web.
+                    Profus met gratuitement à disposition des outils vous permettant d&apos;optimiser votre expérience ingame
                 </h2>
                 <div className={styles.home__button}>
                     <a className={`${stylesButton.basic_button}`}>Briser un item</a>
@@ -142,10 +142,10 @@ export default function Home() {
             </div>
             <div className={styles.step__h4class__container}>
                 <h4 className={styles.step__h4class}>
-                    <span className={styles.step__h4class__text}>Build when inspiration strikes</span>
+                    <span className={styles.step__h4class__text}>Pour encore plus de kamas</span>
                 </h4>
                 <p className={styles.step__p}>
-                    <span className={styles.step__p__text}>lorem lipsum some test lorem lipsum some test lorem lipsum some test lorem lipsum some test lorem lipsum some test</span>
+                    <span className={styles.step__p__text}>Gagne du temps et optimise tes actions en jeu </span>
                 </p>
             </div>
             <div className={styles.showroom__container}>
@@ -181,7 +181,7 @@ export default function Home() {
                             Optimise le brisage de ton item
                         </h5>
                         <div className={styles.showroom__description}>
-                            Everything you need to build your site exactly how you imagine, from automatic API handling to built-in image and performance optimizations.
+                            Simplement en rentrant le nom de l&apos;item, tu obtiendras le nombre de kamas précis que tu peux générer en brisant avec ou sans focus. 
                         </div>
                     </div>
                     <div className={styles.showroom__text}>
@@ -192,7 +192,7 @@ export default function Home() {
                             Economise des kamas en montant tes métiers
                         </h5>
                         <div className={styles.showroom__description}>
-                        Connect your pages to any data source, headless CMS, or API and make it work in everyone’s dev environment.
+                        Etre rentable en montant son métier de craft ou de récolte ? C&apos;est possible avec cet outil qui te permettra d&apos;obtenir la meilleure combinaison de recette et de ressource
                         </div>
                     </div>
                     <div className={styles.showroom__text}>
@@ -203,7 +203,7 @@ export default function Home() {
                             Trouve des astuces fm pour progresser facilement
                         </h5>
                         <div className={styles.showroom__description}>
-                        From caching to Serverless Functions, all our cloud primitives work perfectly on localhost.
+                        Un tableau te permettant d&apos;avoir rapidement le poids d&apos;une rune et son palier
                         </div>
                     </div>
                 </div>
