@@ -8,7 +8,6 @@ import global_styles from "../global/global.module.css"
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-import RunesTable from "./Runes_table"
 import NewRunesTable from "./NewRunesTable"
 import { calculBrisage } from "./CalculBrisage"
 import GraphicBrisageTaux from "./GraphicBrisageTaux"
