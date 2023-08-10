@@ -112,7 +112,7 @@ export default function NewRunesTable({ data, stats, runePrice, setStats, setRun
                 <thead>
                     <tr>
                         <th>Runes</th>
-                        <th>Statistiques de l'item</th>
+                        <th>Statistiques de l&apos;item</th>
                         <th>Prix de la rune (/u)</th>
                         <th>Quantité</th>
                         <th>Prix</th>
@@ -123,7 +123,7 @@ export default function NewRunesTable({ data, stats, runePrice, setStats, setRun
                 <tbody>
                     {data.stats.map((object: any, i: any) => {
                         return (
-                            <tr>
+                            <tr key={object.id_rune}>
                                 <td className={styles.td}>
                                     {/* <i className={`${global_styles.stat} ${global_styles.stat_force} ${styles.icon_carac}`}></i>  */}
                                     {object.desc_fr}

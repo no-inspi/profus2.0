@@ -176,7 +176,7 @@ export default function Navigation() {
         <div>
           <ul className={clickedMenu ? `${styles.navbar} ${styles.active}` : styles.navbar}>
             {MENUCONST.map((menu, index) => (
-              <li ><a className={activeMenu[index] ? styles.active : ""} href={menu.link}>{menu.name}</a></li>
+              <li key={menu.name} ><a className={activeMenu[index] ? styles.active : ""} href={menu.link}>{menu.name}</a></li>
             ))}
             <li>
               <div className={stylesButton.loginContainer}>
