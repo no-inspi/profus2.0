@@ -44,8 +44,17 @@ const Item = (item: any) => {
     )
 }
 
+
+interface Item {
+    id: any;
+    name_fr: any;
+    desc_fr: any;
+    level: any;
+    price: any;
+}
+
 export default function Brisage() {
-    const [item, setItem] = useState({})
+    const [item, setItem] = useState<Item | undefined>(undefined)
     const [itemStat, setItemStat] = useState([])
     const [itemEffect, setItemEffect] = useState([])
     const [taux, setTaux] = useState("100")
@@ -189,10 +198,10 @@ export default function Brisage() {
                     </div>
                     <div className={brisage_styles.item__container}>
                         <div className={brisage_styles.item__display}>
-                            {item.name_fr ? (item.name_fr + " lvl." + item.level) : null}
+                            {item?.name_fr ? (item.name_fr + " lvl." + item.level) : null}
                         </div>
                         <div>
-                            {item.name_fr &&
+                            {item?.name_fr &&
                                 <InputGroup size='lg'>
                                     Taux
                                     <NumberInput step={1} value={taux} min={1} max={5000} className={brisage_styles.input__percent} onChange={(event) => handleChangeTaux(event)}>
@@ -208,7 +217,7 @@ export default function Brisage() {
                             }
                         </div>
                     </div>
-                    {(item.name_fr && itemEffect[0]) &&
+                    {(item?.name_fr && itemEffect[0]) &&
                         <div className={brisage_styles.container_table}>
                             {/* <i className={`${global_styles.stat} ${global_styles.stat_vitalite}`}></i>
                         <i className={`${global_styles.stat} ${global_styles.stat_force}`}></i>
@@ -219,8 +228,8 @@ export default function Brisage() {
                         </div>
                     }
                 </div>
-                {item.id ? <GraphicBrisageTaux item={item} /> : null}
-                
+                {item?.id ? <GraphicBrisageTaux item={item} /> : null}
+
 
 
             </div>

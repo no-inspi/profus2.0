@@ -45,8 +45,17 @@ const Item = (item: any) => {
     )
 }
 
+interface Item {
+    id: any;
+    id_: any
+    name_fr: any;
+    desc_fr: any;
+    level: any;
+    price: any;
+}
+
 export default function NewBrisage() {
-    const [item, setItem] = useState({})
+    const [item, setItem] = useState<Item | undefined>(undefined)
     const [stats, setStats] = useState([{ "id": 18206, "value": 355 }])
     const [runePrice, setRunePrice] = useState([])
     const [objectToDisplay, setItemToDisplay] = useState({})
@@ -77,7 +86,7 @@ export default function NewBrisage() {
 
     useEffect(() => {
         console.log(stats, runePrice)
-        if (typeof item.name_fr !== "undefined") {
+        if (typeof item?.name_fr !== "undefined") {
 
             console.log(item)
             let dataParams = JSON.stringify({
@@ -125,7 +134,7 @@ export default function NewBrisage() {
     const handleResultSelect = (event: any) => {
         var tauxresp = axios({
             method: 'get',
-            url: `http://localhost:3001/items/add_item_taux?id=${item.id}&taux=${taux}&serverid=208`,
+            url: `http://localhost:3001/items/add_item_taux?id=${item?.id}&taux=${taux}&serverid=208`,
             headers: {},
         })
             .then((response) => {
@@ -195,7 +204,7 @@ export default function NewBrisage() {
                         />
                     </div>
                     <div>
-                        {!item.name_fr ? null :
+                        {!item?.name_fr ? null :
                             <>
                                 {isLoading ? <Spinner color='red.500' size='xl' speed="0.7s"/> :
                                     <>
@@ -229,7 +238,7 @@ export default function NewBrisage() {
                         }
                     </div>
                 </div>
-                {item.id ? <GraphicBrisageTaux item={item} data={objectToDisplay} /> : null}
+                {item?.id ? <GraphicBrisageTaux item={item} data={objectToDisplay} /> : null}
 
 
 
