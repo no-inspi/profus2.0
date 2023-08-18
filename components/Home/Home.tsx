@@ -1,4 +1,5 @@
 import { Button, SimpleGrid, Card, CardHeader, Heading, CardBody, CardFooter, Text } from '@chakra-ui/react'
+import { motion } from "framer-motion"
 
 import styles from './Home.module.css';
 import stylesCard from './Card.module.css'
@@ -9,13 +10,17 @@ import home_full from '../img/home_full.png'
 import home_metier from '../img/metiers.png'
 import home_rune from '../img/page_rune.png'
 
-import { GiHammerBreak, GiScythe, GiRuneStone } from 'react-icons/gi'
+import { GiHammerBreak, GiScythe, GiRuneStone, GiTrade } from 'react-icons/gi'
+import {MdInventory} from 'react-icons/md'
+import {FaShoppingCart} from 'react-icons/fa'
 
 export default function Home() {
     return (
         <>
             <div className={styles.home__container}>
-                <div className={styles.home__title}>
+                <motion.div
+                    initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0.1 }}
+                    className={styles.home__title}>
                     {/* <span className={styles.animate__charcter}>
                         Develop. Preview. Ship.
                     </span> */}
@@ -36,14 +41,18 @@ export default function Home() {
                             </span>
                         </span>
                     </h1>
-                </div>
-                <h2 className={styles.home__description}>
+                </motion.div>
+                <motion.h2
+                    initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }}
+                    className={styles.home__description}>
                     Profus met gratuitement à disposition des outils vous permettant d&apos;optimiser votre expérience ingame
-                </h2>
-                <div className={styles.home__button}>
+                </motion.h2>
+                <motion.div
+                    initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0.3 }}
+                    className={styles.home__button}>
                     <a className={`${stylesButton.basic_button}`}>Briser un item</a>
                     <a className={`${stylesButton.gradient_border}`}>Les métiers</a>
-                </div>
+                </motion.div>
             </div>
             {/* <div className={styles.card__container}>
                 <div className={stylesCard.ag_courses_item}>
@@ -128,27 +137,29 @@ export default function Home() {
                     </a>
                 </div>
             </div> */}
-            <div className={styles.title__before}>
-                <span className={styles.title__before__text}>Explore Profus</span>
-            </div>
-            <div className={styles.step__container}>
-                <span className={styles.step__lines}></span>
-                <div className={styles.step__number__container}>
-                    <span className={styles.step__number}>1</span>
+            <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0.4 }}>
+                <div className={styles.title__before}>
+                    <span className={styles.title__before__text}>Explore Profus</span>
                 </div>
-                <h3 className={styles.step__title}>
-                    <span className={styles.step__title__text}>Optimisation</span>
-                </h3>
-            </div>
-            <div className={styles.step__h4class__container}>
-                <h4 className={styles.step__h4class}>
-                    <span className={styles.step__h4class__text}>Pour encore plus de kamas</span>
-                </h4>
-                <p className={styles.step__p}>
-                    <span className={styles.step__p__text}>Gagne du temps et optimise tes actions en jeu </span>
-                </p>
-            </div>
-            <div className={styles.showroom__container}>
+                <div className={styles.step__container}>
+                    <span className={styles.step__lines}></span>
+                    <div className={styles.step__number__container}>
+                        <span className={styles.step__number}>1</span>
+                    </div>
+                    <h3 className={styles.step__title}>
+                        <span className={styles.step__title__text}>Optimisation</span>
+                    </h3>
+                </div>
+                <div className={styles.step__h4class__container}>
+                    <h4 className={styles.step__h4class}>
+                        <span className={styles.step__h4class__text}>Pour encore plus de kamas</span>
+                    </h4>
+                    <p className={styles.step__p}>
+                        <span className={styles.step__p__text}>Gagne du temps et optimise tes actions en jeu </span>
+                    </p>
+                </div>
+            </motion.div>
+            <motion.div className={styles.showroom__container} initial={{ y: 10, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0.5 }}>
                 <div className={styles.showroom__image}>
                     <Image
                         src={home_full}
@@ -175,48 +186,85 @@ export default function Home() {
                 <div className={styles.showroom__global__container}>
                     <div className={styles.showroom__text}>
                         <div className={styles.showroom__icon}>
-                            <GiHammerBreak style={{ fontSize: "3rem", color: "#999" }} />
+                            <GiHammerBreak style={{ fontSize: "3rem", color: "white" }} />
                         </div>
                         <h5 className={styles.h5class}>
                             Optimise le brisage de ton item
                         </h5>
                         <div className={styles.showroom__description}>
-                            Simplement en rentrant le nom de l&apos;item, tu obtiendras le nombre de kamas précis que tu peux générer en brisant avec ou sans focus. 
+                            Simplement en rentrant le nom de l&apos;item, tu obtiendras le nombre de kamas précis que tu peux générer en brisant avec ou sans focus.
                         </div>
                     </div>
                     <div className={styles.showroom__text}>
                         <div className={styles.showroom__icon}>
-                            <GiScythe style={{ fontSize: "3rem", color: "#999" }} />
+                            <GiScythe style={{ fontSize: "3rem", color: "white" }} />
                         </div>
                         <h5 className={styles.h5class}>
                             Economise des kamas en montant tes métiers
                         </h5>
                         <div className={styles.showroom__description}>
-                        Etre rentable en montant son métier de craft ou de récolte ? C&apos;est possible avec cet outil qui te permettra d&apos;obtenir la meilleure combinaison de recette et de ressource
+                            Etre rentable en montant son métier de craft ou de récolte ? C&apos;est possible avec cet outil qui te permettra d&apos;obtenir la meilleure combinaison de recette et de ressource
                         </div>
                     </div>
                     <div className={styles.showroom__text}>
                         <div className={styles.showroom__icon}>
-                            <GiRuneStone style={{ fontSize: "3rem", color: "#999" }} />
+                            <GiRuneStone style={{ fontSize: "3rem", color: "white" }} />
                         </div>
                         <h5 className={styles.h5class}>
                             Trouve des astuces fm pour progresser facilement
                         </h5>
                         <div className={styles.showroom__description}>
-                        Un tableau te permettant d&apos;avoir rapidement le poids d&apos;une rune et son palier
+                            Un tableau te permettant d&apos;avoir rapidement le poids d&apos;une rune et son palier
                         </div>
                     </div>
                 </div>
-            </div>
+            </motion.div>
             <div className={styles.step__container}>
                 <span className={styles.step__lines}></span>
                 <div className={styles.step__number__container}>
                     <span className={styles.step__number}>2</span>
                 </div>
                 <h3 className={styles.step__title}>
-                    <span className={styles.step__title__text}>Information</span>
+                    <span className={styles.step__title__text}>Gestion</span>
                 </h3>
+                <div className={styles.step__h4class__container}>
+                    <h4 className={styles.step__h4class}>
+                        <span className={styles.step__h4class__text}>Gère tes ressources/craft/ventes </span>
+                    </h4>
+                    <p className={styles.step__p}>
+                        <span className={styles.step__p__text}>Centralise tout au même endroit</span>
+                    </p>
+                </div>
             </div>
+            <motion.div className={styles.secondpart__card__container}>
+                <div className={styles.secondpart__card}>
+                    <div className={styles.secondpart__card__titleicon}>
+                        <span className={styles.secondpart__card__icon}><GiTrade size='1.5em' /></span> 
+                        <span className={styles.secondpart__card__title}>Trade Helper</span>
+                    </div>
+                    <div className={styles.secondpart__card__text}>
+                        Cet outil permet de suivre vos ventes et vos bénéfices net en rentrant les ressources/objets que vous avez vendu
+                    </div>
+                </div>
+                <div className={styles.secondpart__card}>
+                    <div className={styles.secondpart__card__titleicon}>
+                        <span className={styles.secondpart__card__icon}><MdInventory size='1.5em' /></span> 
+                        <span className={styles.secondpart__card__title}>Inventaire</span>
+                    </div>
+                    <div className={styles.secondpart__card__text}>
+                        Cet outil permet de suivre vos ventes et vos bénéfices net en rentrant les ressources/objets que vous avez vendu
+                    </div>
+                </div>
+                <div className={styles.secondpart__card}>
+                    <div className={styles.secondpart__card__titleicon}>
+                        <span className={styles.secondpart__card__icon}><FaShoppingCart size='1.5em' /></span> 
+                        <span className={styles.secondpart__card__title}>Shopping List</span>
+                    </div>
+                    <div className={styles.secondpart__card__text}>
+                        Cet outil permet de suivre vos ventes et vos bénéfices net en rentrant les ressources/objets que vous avez vendu
+                    </div>
+                </div>
+            </motion.div>
 
         </>
     )
