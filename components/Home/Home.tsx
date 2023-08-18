@@ -11,8 +11,8 @@ import home_metier from '../img/metiers.png'
 import home_rune from '../img/page_rune.png'
 
 import { GiHammerBreak, GiScythe, GiRuneStone, GiTrade } from 'react-icons/gi'
-import {MdInventory} from 'react-icons/md'
-import {FaShoppingCart} from 'react-icons/fa'
+import { MdInventory } from 'react-icons/md'
+import { FaShoppingCart } from 'react-icons/fa'
 
 export default function Home() {
     return (
@@ -219,7 +219,9 @@ export default function Home() {
                     </div>
                 </div>
             </motion.div>
-            <div className={styles.step__container}>
+            <motion.div
+                initial={{ x: 10, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0.5 }}
+                className={styles.step__container}>
                 <span className={styles.step__lines}></span>
                 <div className={styles.step__number__container}>
                     <span className={styles.step__number}>2</span>
@@ -235,34 +237,76 @@ export default function Home() {
                         <span className={styles.step__p__text}>Centralise tout au même endroit</span>
                     </p>
                 </div>
-            </div>
-            <motion.div className={styles.secondpart__card__container}>
-                <div className={styles.secondpart__card}>
-                    <div className={styles.secondpart__card__titleicon}>
-                        <span className={styles.secondpart__card__icon}><GiTrade size='1.5em' /></span> 
-                        <span className={styles.secondpart__card__title}>Trade Helper</span>
-                    </div>
-                    <div className={styles.secondpart__card__text}>
-                        Cet outil permet de suivre vos ventes et vos bénéfices net en rentrant les ressources/objets que vous avez vendu
-                    </div>
-                </div>
-                <div className={styles.secondpart__card}>
-                    <div className={styles.secondpart__card__titleicon}>
-                        <span className={styles.secondpart__card__icon}><MdInventory size='1.5em' /></span> 
-                        <span className={styles.secondpart__card__title}>Inventaire</span>
-                    </div>
-                    <div className={styles.secondpart__card__text}>
-                        Cet outil permet de suivre vos ventes et vos bénéfices net en rentrant les ressources/objets que vous avez vendu
-                    </div>
-                </div>
-                <div className={styles.secondpart__card}>
-                    <div className={styles.secondpart__card__titleicon}>
-                        <span className={styles.secondpart__card__icon}><FaShoppingCart size='1.5em' /></span> 
-                        <span className={styles.secondpart__card__title}>Shopping List</span>
-                    </div>
-                    <div className={styles.secondpart__card__text}>
-                        Cet outil permet de suivre vos ventes et vos bénéfices net en rentrant les ressources/objets que vous avez vendu
-                    </div>
+            </motion.div>
+            <motion.div
+                // initial={{ y: 10, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0.5 }}
+                className={styles.secondpart__card__container}>
+                <div className={styles.secondpart__card__flex}>
+                    <motion.div
+                        initial={{ x: 10, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} 
+                        transition={{opacity: { duration: 0.5, delay: 0.8 }, x: { duration: 0.5, delay: 0.8 }, scale: { duration: 0.1, delay: 0 }}}
+                        whileHover={{ scale: 1.1 }}
+                        className={styles.secondpart__card}>
+                        <div className={styles.secondpart__card__titleicon}>
+                            <span className={styles.secondpart__card__icon}><GiTrade size='1.5em' /></span>
+                            <span className={styles.secondpart__card__title}>Trade Helper</span>
+                        </div>
+                        <div className={styles.secondpart__card__text}>
+                            Cet outil permet de suivre vos ventes et vos bénéfices net en rentrant les ressources/objets que vous avez vendu
+                        </div>
+                    </motion.div>
+                    <motion.div
+                        initial={{ x: 10, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} 
+                        transition={{opacity: { duration: 0.5, delay: 0.8 }, x: { duration: 0.5, delay: 0.8 }, scale: { duration: 0.1, delay: 0 }}}
+                        whileHover={{ scale: 1.1 }}
+                        className={styles.secondpart__card}>
+                        <div className={styles.secondpart__card__titleicon}>
+                            <span className={styles.secondpart__card__icon}><MdInventory size='1.5em' /></span>
+                            <span className={styles.secondpart__card__title}>Inventaire</span>
+                        </div>
+                        <div className={styles.secondpart__card__text}>
+                            Cet outil permet de suivre vos ventes et vos bénéfices net en rentrant les ressources/objets que vous avez vendu
+                        </div>
+                    </motion.div>
+                    <motion.div
+                        initial={{ x: 10, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} 
+                        transition={{opacity: { duration: 0.5, delay: 0.8 }, x: { duration: 0.5, delay: 0.8 }, scale: { duration: 0.1, delay: 0 }}}
+                        whileHover={{ scale: 1.1 }}
+                        className={styles.secondpart__card}>
+                        <div className={styles.secondpart__card__titleicon}>
+                            <span className={styles.secondpart__card__icon}><FaShoppingCart size='1.5em' /></span>
+                            <span className={styles.secondpart__card__title}>Shopping List</span>
+                        </div>
+                        <div className={styles.secondpart__card__text}>
+                            Cet outil permet de suivre vos ventes et vos bénéfices net en rentrant les ressources/objets que vous avez vendu
+                        </div>
+                    </motion.div>
+                    <motion.div
+                        initial={{ x: 10, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} 
+                        transition={{opacity: { duration: 0.5, delay: 0.8 }, x: { duration: 0.5, delay: 0.8 }, scale: { duration: 0.1, delay: 0 }}}
+                        whileHover={{ scale: 1.1 }}
+                        className={styles.secondpart__card}>
+                        <div className={styles.secondpart__card__titleicon}>
+                            <span className={styles.secondpart__card__icon}><FaShoppingCart size='1.5em' /></span>
+                            <span className={styles.secondpart__card__title}>Shopping List</span>
+                        </div>
+                        <div className={styles.secondpart__card__text}>
+                            Cet outil permet de suivre vos ventes et vos bénéfices net en rentrant les ressources/objets que vous avez vendu
+                        </div>
+                    </motion.div>
+                    <motion.div
+                        initial={{ x: 10, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} 
+                        transition={{opacity: { duration: 0.5, delay: 0.8 }, x: { duration: 0.5, delay: 0.8 }, scale: { duration: 0.1, delay: 0 }}}
+                        whileHover={{ scale: 1.1 }}
+                        className={styles.secondpart__card}>
+                        <div className={styles.secondpart__card__titleicon}>
+                            <span className={styles.secondpart__card__icon}><FaShoppingCart size='1.5em' /></span>
+                            <span className={styles.secondpart__card__title}>Shopping List</span>
+                        </div>
+                        <div className={styles.secondpart__card__text}>
+                            Cet outil permet de suivre vos ventes et vos bénéfices net en rentrant les ressources/objets que vous avez vendu
+                        </div>
+                    </motion.div>
                 </div>
             </motion.div>
 

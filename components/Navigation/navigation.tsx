@@ -39,47 +39,57 @@ import React, { useState, useEffect, useRef } from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee, faBars, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { AiOutlineUser } from 'react-icons/ai'
+import { AiOutlineUser, AiOutlineHome, AiOutlineCalendar, AiOutlineMessage } from 'react-icons/ai'
 import { IoExitOutline } from 'react-icons/io5'
 import { MdOutlineAccountCircle } from 'react-icons/md'
 import { GiSettingsKnobs, GiExitDoor } from 'react-icons/gi'
+import { GiHammerBreak, GiScythe, GiRuneStone, GiTrade, GiAbdominalArmor } from 'react-icons/gi'
+import {GrContactInfo} from 'react-icons/gr'
 
 import { useRouter } from 'next/router'
 import Cookies from 'js-cookie';
-import {motion} from 'framer-motion'
+import { motion } from 'framer-motion'
 
 const MENUCONST = [
   {
     "link": "/",
-    "name": "Home"
+    "name": "Home",
+    "icon": <AiOutlineHome />
   },
   {
     "link": "/outils/brisage",
-    "name": "Brisage"
+    "name": "Brisage",
+    "icon": <GiHammerBreak />
   },
   {
     "link": "/outils/fm",
-    "name": "FM"
+    "name": "FM",
+    "icon": <GiRuneStone />
   },
   {
     "link": "/outils/metiers",
-    "name": "Métiers"
+    "name": "Métiers",
+    "icon": <GiScythe />
   },
   {
     "link": "/outils/almanax",
-    "name": "Almanax"
+    "name": "Almanax",
+    "icon": <AiOutlineCalendar />
   },
   {
     "link": "/outils/equip",
-    "name": "Equipements"
+    "name": "Equipements",
+    "icon": <GiAbdominalArmor />
   },
   {
     "link": "/outils/tradehelper",
-    "name": "TradeHelper"
+    "name": "TradeHelper",
+    "icon": <GiTrade />
   },
   {
     "link": "/about",
-    "name": "Contact"
+    "name": "Contact",
+    "icon": <AiOutlineMessage />
   },
 ]
 
@@ -142,7 +152,7 @@ export default function Navigation() {
     const scrollTop = window.scrollY;
     const stickyClass = scrollTop >= 10 ? styles.is_sticky : "";
     setSticky(stickyClass);
-  
+
   };
 
   const handleClick = () => {
@@ -161,7 +171,7 @@ export default function Navigation() {
   const handleShowPwd = () => setShow(!show)
 
   const deconnexion = () => {
-    
+
     Cookies.remove('accessToken')
     Cookies.remove('refreshToken')
     setIsConnected(false)
@@ -180,7 +190,17 @@ export default function Navigation() {
         <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0 }}>
           <ul className={clickedMenu ? `${styles.navbar} ${styles.active}` : styles.navbar}>
             {MENUCONST.map((menu, index) => (
-              <li key={menu.name} ><a className={activeMenu[index] ? styles.active : ""} href={menu.link}>{menu.name}</a></li>
+              <li key={menu.name} ><a className={activeMenu[index] ? styles.active : ""} href={menu.link}>
+                <div className={styles.link__flex}>
+                  <div>
+                    {menu.icon}
+                  </div>
+                  <div>
+                    {menu.name}
+                  </div>
+                </div>
+              </a>
+              </li>
             ))}
             <li>
               <div className={stylesButton.loginContainer}>
@@ -266,7 +286,7 @@ export default function Navigation() {
               </FormControl>
               <FormControl isRequired>
                 <FormLabel>Confirm your password</FormLabel>
-                <Input type='password' {...registerSignup("verifpasswordsignup", { required: true })}/>
+                <Input type='password' {...registerSignup("verifpasswordsignup", { required: true })} />
               </FormControl>
             </ModalBody>
 
@@ -314,7 +334,7 @@ export default function Navigation() {
             </ModalBody>
 
             <ModalFooter>
-              
+
               {/*<button className={`${stylesButton.button} ${stylesButton.white}`} style={{marginRight: 3}} onClick={onCloseLogin}> Quitter </button>*/}
               <Button className={`${stylesButton.button}`} colorScheme='darkButton' mr={3} type="submit"> Connexion </Button>
               <Button className={`${stylesButton.button} ${stylesButton.white}`} mr={3} onClick={onCloseLogin}>

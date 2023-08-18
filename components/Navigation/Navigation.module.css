@@ -38,7 +38,7 @@
     font-size: 1rem;
     font-weight: 600;
     color: #a1a1a1;
-    transition: 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
     cursor: pointer;
 }
 
@@ -49,7 +49,7 @@
 .navbar li a:hover::after,
 .navbar li a.active::after {
     content: "";
-    width: 40%;
+    width: 50%;
     height: 2px;
     background: white;
     position: absolute;
@@ -111,6 +111,13 @@
     gap: 10px;
 }
 
+.link__flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2px;
+}
+
 @media screen and (max-width: 1200px) {
     .navbar li a {
         font-size: 0.875rem;
@@ -123,7 +130,7 @@
     }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 960px) {
     .navbar {
         display: flex;
         flex-direction: column;
@@ -131,8 +138,8 @@
         justify-content: flex-start;
         position: fixed;
         top: 80px;
-        right: -300px;
-        width: 300px;
+        right: -60%;
+        width: 60%;
         height: 100vh;
         background: #2a3239;
         box-shadow: 0 40px 60px rgba(0, 0, 0, 0.1);

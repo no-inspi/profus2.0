@@ -418,30 +418,76 @@
 }
 
 
+.secondpart__card__flex {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 100px;
+    width: 70%;
+}
+
+@media screen and (max-width: 1024px) {
+    .secondpart__card__flex {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 100px;
+        width: 80%;
+    }
+
+    .showroom__container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        gap: 10px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .showroom__container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        gap: 80px;
+    }
+}
+
+@media screen and (max-width: 667px) {
+    .secondpart__card__flex {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 100px;
+        width: 80%;
+    }
+}
+
 .secondpart__card__container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
     margin-top: 50px;
     margin-bottom: 100px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .secondpart__card {
-    background-color: white;
-    border-radius: 10px;
-    padding: 10px;
-    /*height: 150px;*/
-    width: 250px;
+    background-color: rgba(33,47,69,1);
+    border-radius: 5px;
+    padding: 24px;
     transition: all 0.3s ease;
     cursor: pointer;
-    box-shadow: 0 30px 60px rgba(0,0,0,.12);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 30px;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .secondpart__card:hover {
@@ -470,11 +516,11 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 0px 30px;
+    /* padding: 0px 30px; */
     font-size: 0.875rem;
     line-height: 1.5rem;
     font-weight: 400;
-    color: rgb(33, 33, 33);
+    color: hsl(0, 0%, 63%);
 }
 
 .secondpart__card__icon {
