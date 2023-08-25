@@ -50,7 +50,7 @@ export default function GraphicBrisageTaux({ item, data }: any) {
         console.log(item.id_)
         var tauxresp = axios({
             method: 'get',
-            url: `http://localhost:3001/items/get_item_taux?id=${item.id_}`,
+            url: `https://profus-api-1-0.vercel.app/items/get_item_taux?id=${item.id_}`,
             headers: {},
         })
             .then((response) => {
@@ -71,7 +71,7 @@ export default function GraphicBrisageTaux({ item, data }: any) {
 
         const runepriceresp = axios({
             method: 'get',
-            url: `http://localhost:3001/graph/get_rune_price_per_d?id=${item.item_effect[0].rune_item_id}&server_id=36`,
+            url: `https://profus-api-1-0.vercel.app/graph/get_rune_price_per_d?id=${item.item_effect[0].rune_item_id}&server_id=36`,
             headers: {},
         })
             .then((response) => {
