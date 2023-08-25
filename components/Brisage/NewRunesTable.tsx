@@ -48,33 +48,37 @@ export default function NewRunesTable({ data, stats, runePrice, setStats, setRun
 
     function handleStat(event: any, id_rune: any, i: any) {
         let temp_state: any;
+        // console.log(event.target.value, statsIntern[i])
 
-        temp_state = [...stats];
-        console.log(event.target.value)
+        // if (event.target.value == data.stats[i].value) {
 
-        data.stats[i].value = event.target.value
 
-        console.log("enter test", id_rune)
-        const isIn = temp_state.find(({ id }: any) => Number(id) === Number(id_rune))
-        console.log(isIn)
-        if (isIn != undefined) {
-            console.log("enter not undefined")
-            const idToUpdate = temp_state.findIndex(({ id }: any) => Number(id) === Number(id_rune))
-            temp_state[idToUpdate].value = event.target.value
-            setStats(temp_state)
-        }
-        else {
-            console.log("enter undefined")
-            temp_state.push({ "id": Number(id_rune), "value": event.target.value })
-            setStats(temp_state)
-        }
-        console.log(temp_state)
 
+            temp_state = [...stats];
+
+            data.stats[i].value = event.target.value
+
+            console.log("enter test", id_rune)
+            const isIn = temp_state.find(({ id }: any) => Number(id) === Number(id_rune))
+            console.log(isIn)
+            if (isIn != undefined) {
+                console.log("enter not undefined")
+                const idToUpdate = temp_state.findIndex(({ id }: any) => Number(id) === Number(id_rune))
+                temp_state[idToUpdate].value = event.target.value
+                setStats(temp_state)
+            }
+            else {
+                console.log("enter undefined")
+                temp_state.push({ "id": Number(id_rune), "value": event.target.value })
+                setStats(temp_state)
+            }
+            console.log(temp_state)
+        // }
         // 
     }
 
     function handleChangeStat(event: any, i: any) {
-        console.log(event.target.value, statsIntern)
+        console.log(event.target.value, statsIntern[i])
         let temp_state: any;
 
         temp_state = [...statsIntern];

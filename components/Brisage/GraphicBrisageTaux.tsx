@@ -5,6 +5,7 @@ import axios from 'axios'
 
 import styles from "./graph.module.css"
 import { Select } from '@chakra-ui/react'
+import { add, format, differenceInCalendarDays, isFuture } from "date-fns";
 
 
 
@@ -26,13 +27,17 @@ const CustomTooltipRunePrice = ({ active, payload, label }: any) => {
         return (
             <div className={styles.tooltip_container}>
                 <p className="label">{`Prix : ${Math.floor(payload[0].value)}`}</p>
-                <p className="label">{`Date : ${payload[0].payload.saved_date}`}</p>
+                <p className="label">{`Date : ${format(new Date(payload[0].payload.saved_date), "dd/MMM/yyyy")}`}</p>
             </div>
         );
     }
 
     return null;
 };
+
+const dateFormatter = (date: any) => {
+    return format(new Date(date), "dd/MMM/yyyy");
+  };
 
 export default function GraphicBrisageTaux({ item, data }: any) {
 
@@ -42,12 +47,14 @@ export default function GraphicBrisageTaux({ item, data }: any) {
     const [server, setServer] = useState({"id": 36, "name": "Imagiro"})
 
     useEffect(() => {
+        console.log(item.id_)
         var tauxresp = axios({
             method: 'get',
-            url: `http://localhost:3001/items/get_item_taux?id=${item.id}`,
+            url: `http://localhost:3001/items/get_item_taux?id=${item.id_}`,
             headers: {},
         })
             .then((response) => {
+                console.log(response)
                 if (response.status == 200) {
                     setDataTaux(response.data)
                     setLoading(false)
@@ -87,11 +94,11 @@ export default function GraphicBrisageTaux({ item, data }: any) {
                 <>
                     <div className={styles.graph_container_child}>
                         <div className={styles.graph_container_withselect}>
-                            <div>
+                            {/* <div>
                                 <Select placeholder='Pourquoi tu guettes ?' style={{ opacity: 0 }}>
                                     <option value='option1'>Pourquoi tu guettes ? </option>
                                 </Select>
-                            </div>
+                            </div> */}
                             <ResponsiveContainer width="100%" height="100%">
                                 <LineChart
                                     width={800}
@@ -105,7 +112,7 @@ export default function GraphicBrisageTaux({ item, data }: any) {
                                     }}
                                 >
                                     <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="createdAt" />
+                                    <XAxis dataKey="createdAt" tickFormatter={dateFormatter}/>
                                     <YAxis />
                                     <Tooltip content={<CustomTooltipTaux />} />
                                     <Legend />
@@ -134,7 +141,7 @@ export default function GraphicBrisageTaux({ item, data }: any) {
                                     }}
                                 >
                                     <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="saved_date" />
+                                    <XAxis dataKey="saved_date" tickFormatter={dateFormatter}/>
                                     <YAxis />
                                     <Tooltip content={<CustomTooltipRunePrice />} />
                                     <Legend />

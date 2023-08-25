@@ -247,7 +247,7 @@ export default function NewBrisage() {
                         }
                     </div>
                 </div>
-                {item?.id ? <GraphicBrisageTaux item={item} data={objectToDisplay} /> : null}
+                {!item?.name_fr ? null : <GraphicBrisageTaux item={item} data={objectToDisplay} />}
 
 
 
