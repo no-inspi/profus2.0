@@ -37,10 +37,20 @@
 .brisage__server {
     color: white;
     background-color: #1b2430;
+    transition: all 0.3s ease;
+}
+
+.brisage__server:hover {
+    transform: scale(1.05);
+}
+
+.brisage__pointer {
+    cursor: pointer;
 }
 
 .option__select {
     color: #1b2430;
+    cursor: pointer;
 }
 
 .item__container {

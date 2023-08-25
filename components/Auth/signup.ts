@@ -9,6 +9,7 @@ function inscription(data: any, url: string, setIsConnected: any, onCloseSignup:
         data: {
             "email": data.email,
             "password": data.passwordSignup,
+            "passwordConfirm": data.verifpasswordsignup,
             "pseudo": data.pseudoSignup
         }
       })
@@ -29,12 +30,18 @@ function inscription(data: any, url: string, setIsConnected: any, onCloseSignup:
                 isClosable: true,
             })
         }
-        else {
-            console.log("error on signup")
-        }
-        
       }, (error) => {
-        console.log(error);
+        console.log(error.response.data.error)
+        if (error.response.status == 400) {
+          console.log("error on sign up")
+          toast({
+            title: error.response.data.error,
+            description: "Veuillez réessayer",
+            status: 'error',
+            duration: 7000,
+            isClosable: true,
+          })
+        }
       });
 
 }

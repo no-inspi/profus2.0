@@ -12,6 +12,8 @@ import NewRunesTable from "./NewRunesTable"
 import { calculBrisage } from "./CalculBrisage"
 import GraphicBrisageTaux from "./GraphicBrisageTaux"
 
+import {motion} from 'framer-motion'
+
 const style = {
     input: styles.searchbox,
     listbox: styles.listbox,
@@ -61,6 +63,7 @@ export default function NewBrisage() {
     const [taux, setTaux] = useState("100")
     const [tauxValue, setTauxValue] = useState("100")
     const [isLoading, setisLoading] = useState(true)
+    const [server, setServer] = useState("Imagiro")
     const toast = useToast()
 
     var myHeaders = new Headers();
@@ -98,7 +101,7 @@ export default function NewBrisage() {
             let config = {
                 method: 'post',
                 maxBodyLength: Infinity,
-                url: 'https://profus-api-1-0.vercel.app/brisage/get_brisage_data',
+                url: 'https://profus-api-1-0.vercel.app/brisage/test',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY5MTIyMTIxMiwiZXhwIjoxNjkxMzA3NjEyfQ.LlRA3HfazhvQ-Q4g5K3YKHq3M-dOS07OWR2yeBPrX60'
@@ -117,7 +120,7 @@ export default function NewBrisage() {
                 });
         }
 
-    }, [item, taux, stats, runePrice])
+    }, [item, taux, stats, runePrice, server])
 
     function onValueChange(event: any) {
         console.log(event)
@@ -169,14 +172,21 @@ export default function NewBrisage() {
         }
     }
 
+    const handleServerChange = (event: any) => {
+    //    console.log(event.target.value)
+       setServer(event.target.value)
+    }
+
     return (
         <div className="background__color">
-            <div className={brisage_styles.brisage__container}>
+            <motion.div 
+            initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0.1 }}
+            className={brisage_styles.brisage__container}>
                 <div className={brisage_styles.brisage__title}></div>
                 <div className={brisage_styles.brisage__card}>
                     <div className={brisage_styles.brisage__server__container}>
                         <div className={brisage_styles.brisage__server}>
-                            <Select >
+                            <Select className={brisage_styles.brisage__pointer} onChange={(event: any) => handleServerChange(event)}>
                                 <option value='Imagiro' className={brisage_styles.option__select}>Imagiro</option>
                                 <option value='Draconiros' className={brisage_styles.option__select}>Draconiros</option>
                                 <option value='Tylezia' className={brisage_styles.option__select}>Tylezia</option>
@@ -185,7 +195,7 @@ export default function NewBrisage() {
                         <Turnstone
                             id='search'
                             name='search'
-                            minQueryLength={3}
+                            minQueryLength={1}
                             autoFocus={true}
                             typeahead={true}
                             clearButton={true}
@@ -241,7 +251,7 @@ export default function NewBrisage() {
 
 
 
-            </div>
+            </motion.div>
 
 
         </div>

@@ -11,6 +11,7 @@
 body {
     background: rgb(27,36,48) !important;
     background: linear-gradient(130deg, rgba(27,36,48,1) 0%, rgba(33,47,69,1) 100%)!important;
+    overflow-x: hidden;
 }
 
 /* 

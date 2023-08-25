@@ -13,6 +13,9 @@ import home_rune from '../img/page_rune.png'
 import { GiHammerBreak, GiScythe, GiRuneStone, GiTrade } from 'react-icons/gi'
 import { MdInventory } from 'react-icons/md'
 import { FaShoppingCart } from 'react-icons/fa'
+import { CalendarIcon } from '@chakra-ui/icons';
+
+import { AiOutlineCalendar } from 'react-icons/ai'
 
 export default function Home() {
     return (
@@ -287,8 +290,8 @@ export default function Home() {
                         whileHover={{ scale: 1.1 }}
                         className={styles.secondpart__card}>
                         <div className={styles.secondpart__card__titleicon}>
-                            <span className={styles.secondpart__card__icon}><FaShoppingCart size='1.5em' /></span>
-                            <span className={styles.secondpart__card__title}>Shopping List</span>
+                            <span className={styles.secondpart__card__icon}><AiOutlineCalendar size='1.5em' /></span>
+                            <span className={styles.secondpart__card__title}>Almanax</span>
                         </div>
                         <div className={styles.secondpart__card__text}>
                             Cet outil permet de suivre vos ventes et vos bénéfices net en rentrant les ressources/objets que vous avez vendu
