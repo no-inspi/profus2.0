@@ -57,7 +57,7 @@ export default function NewRunesTable({ data, stats, runePrice, setStats, setRun
             let config = {
                 method: 'post',
                 maxBodyLength: Infinity,
-                url: 'http://localhost:3001/items/set_rune_price',
+                url: 'https://profus-api-1-0.vercel.app/items/set_rune_price',
                 headers: {
                     'Content-Type': 'application/json',
                 },
