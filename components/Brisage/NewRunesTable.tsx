@@ -5,7 +5,8 @@ import {
     NumberIncrementStepper,
     NumberDecrementStepper,
     Input,
-    Button
+    Button,
+    useToast
 } from '@chakra-ui/react'
 
 import Cookies from 'js-cookie';
@@ -15,6 +16,7 @@ import { useState, useEffect } from 'react'
 
 import styles from "./RunesTable.module.css"
 import global_styles from "../global/global.module.css"
+import stylesButton from "../Navigation/Button.module.css"
 
 interface StatsInternObject {
     id_rune: any;
@@ -35,6 +37,8 @@ export default function NewRunesTable({ data, stats, runePrice, setStats, setRun
     const [statsIntern, setStatsIntern] = useState<StatsInternObject[]>([]);
     const [RunesPriceIntern, setRunesPriceIntern] = useState<RunePriceObject[]>([]);
 
+    const toast = useToast()
+
     useEffect(() => {
         console.log(data)
         setStatsIntern(data.stats)
@@ -42,8 +46,43 @@ export default function NewRunesTable({ data, stats, runePrice, setStats, setRun
     })
 
     function handleTest() {
-        console.log("test")
-        setTotalSansFocus(10)
+        // console.log(data.stats)
+        console.log(RunesPriceIntern)
+        RunesPriceIntern.forEach(element => {
+            let dataParams = JSON.stringify({
+                "id": element.id_rune,
+                "price": element.price
+            });
+            console.log(dataParams)
+            let config = {
+                method: 'post',
+                maxBodyLength: Infinity,
+                url: 'http://localhost:3001/items/set_rune_price',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                data: dataParams
+            };
+            axios.request(config)
+                .then((response) => {
+                    console.log(response.data)
+                })
+                .catch((error) => {
+                    toast({
+                        title: 'An error occured while processing the request',
+                        status: 'error',
+                        duration: 9000,
+                        isClosable: true,
+                      })
+                });
+        });
+        toast({
+            title: 'Données bien sauvegardées',
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+        })
+        // setTotalSansFocus(10)
     }
 
     function handleStat(event: any, id_rune: any, i: any) {
@@ -54,25 +93,25 @@ export default function NewRunesTable({ data, stats, runePrice, setStats, setRun
 
 
 
-            temp_state = [...stats];
+        temp_state = [...stats];
 
-            data.stats[i].value = event.target.value
+        data.stats[i].value = event.target.value
 
-            console.log("enter test", id_rune)
-            const isIn = temp_state.find(({ id }: any) => Number(id) === Number(id_rune))
-            console.log(isIn)
-            if (isIn != undefined) {
-                console.log("enter not undefined")
-                const idToUpdate = temp_state.findIndex(({ id }: any) => Number(id) === Number(id_rune))
-                temp_state[idToUpdate].value = event.target.value
-                setStats(temp_state)
-            }
-            else {
-                console.log("enter undefined")
-                temp_state.push({ "id": Number(id_rune), "value": event.target.value })
-                setStats(temp_state)
-            }
-            console.log(temp_state)
+        console.log("enter test", id_rune)
+        const isIn = temp_state.find(({ id }: any) => Number(id) === Number(id_rune))
+        console.log(isIn)
+        if (isIn != undefined) {
+            console.log("enter not undefined")
+            const idToUpdate = temp_state.findIndex(({ id }: any) => Number(id) === Number(id_rune))
+            temp_state[idToUpdate].value = event.target.value
+            setStats(temp_state)
+        }
+        else {
+            console.log("enter undefined")
+            temp_state.push({ "id": Number(id_rune), "value": event.target.value })
+            setStats(temp_state)
+        }
+        console.log(temp_state)
         // }
         // 
     }
@@ -172,7 +211,9 @@ export default function NewRunesTable({ data, stats, runePrice, setStats, setRun
                         <tr>
                             <td></td>
                             <td></td>
-                            <td><Button bg='#01785E' color="white" _hover={{ bg: '#1B3A4B', color: "white" }} className={styles.button__save} onClick={handleTest}>Save</Button></td>
+                            <td>
+                            <Button className={`${stylesButton.button} ${stylesButton.white}`}> Save Runes </Button>
+                                </td>
                             <td colSpan={2} className={styles.footer_total}><b>Total sans focus :</b></td>
                             <td className={styles.td}>
                                 <b>{data.totalWithoutFocus}</b>

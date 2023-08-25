@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Input, InputGroup, InputLeftAddon, InputRightAddon, useToast, Tooltip, Select, NumberInput, NumberInputField, Spinner } from "@chakra-ui/react"
+import { Input, InputGroup, InputLeftAddon, InputRightAddon, useToast, Tooltip, Select, NumberInput, NumberInputField, Spinner, Button } from "@chakra-ui/react"
 import Turnstone from 'turnstone'
 import recentSearchesPlugin from 'turnstone-recent-searches'
 import styles from "./SearchBar.module.css"
@@ -11,6 +11,8 @@ import Cookies from 'js-cookie';
 import NewRunesTable from "./NewRunesTable"
 import { calculBrisage } from "./CalculBrisage"
 import GraphicBrisageTaux from "./GraphicBrisageTaux"
+
+import stylesButton from "../Navigation/Button.module.css"
 
 import {motion} from 'framer-motion'
 
@@ -133,10 +135,11 @@ export default function NewBrisage() {
         }
     }
 
-    const handleResultSelect = (event: any) => {
+    const handleResultSelect = () => {
+        console.log(item)
         var tauxresp = axios({
             method: 'get',
-            url: `https://profus-api-1-0.vercel.app/items/add_item_taux?id=${item?.id}&taux=${taux}&serverid=208`,
+            url: `https://profus-api-1-0.vercel.app/items/add_item_taux?id=${item?.id_}&taux=${taux}&serverid=208`,
             headers: {},
         })
             .then((response) => {
@@ -222,7 +225,7 @@ export default function NewBrisage() {
                                                 {item.name_fr} lvl. {item.level}
                                             </div>
                                             <div>
-                                                <InputGroup size='lg'>
+                                                <InputGroup size='lg' gap={5}>
                                                     {/*// eslint-disable-next-line react/no-children-prop*/}
                                                     Taux
                                                     <NumberInput step={1} value={tauxValue} min={1} max={5000} className={brisage_styles.input__percent}
@@ -230,10 +233,10 @@ export default function NewBrisage() {
                                                         onChange={(event) => handleChangeTauxValue(event)}>
                                                         <NumberInputField />
                                                     </NumberInput>
-                                                    <Tooltip label="Sauvegarde ton taux pour aider la communauté" aria-label='save_tooltip'>
-                                                        {/*<InputRightAddon children='Save' onClick={handleResultSelect} className={brisage_styles.input__right} />*/}
+                                                    {/* <Tooltip label="Sauvegarde ton taux pour aider la communauté" aria-label='save_tooltip'>
                                                         Save
-                                                    </Tooltip>
+                                                    </Tooltip> */}
+                                                    <Button className={`${stylesButton.button} ${stylesButton.white}`} onClick={handleResultSelect}> Save </Button>
                                                 </InputGroup>
 
                                             </div>

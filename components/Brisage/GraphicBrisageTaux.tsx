@@ -145,7 +145,7 @@ export default function GraphicBrisageTaux({ item, data }: any) {
                                     <YAxis />
                                     <Tooltip content={<CustomTooltipRunePrice />} />
                                     <Legend />
-                                    <Line type="monotone" dataKey="_avg.price" stroke="white" activeDot={{ r: 5 }} />
+                                    <Line type="monotone" dataKey="_avg.price" stroke="white" dot={false}/>
                                 </LineChart>
                             </ResponsiveContainer>
                         </div>
