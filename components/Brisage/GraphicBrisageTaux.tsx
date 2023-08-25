@@ -122,7 +122,7 @@ export default function GraphicBrisageTaux({ item, data }: any) {
                         </div>
                         <div className={styles.graph_container_withselect}>
                             <div className={styles.brisage__server}>
-                                <Select >
+                                <Select bg='black' focusBorderColor="white">
                                     <option value='Imagiro' className={styles.option__select}>Imagiro</option>
                                     <option value='Draconiros' className={styles.option__select}>Draconiros</option>
                                     <option value='Tylezia' className={styles.option__select}>Tylezia</option>

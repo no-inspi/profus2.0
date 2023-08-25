@@ -14,7 +14,7 @@ import GraphicBrisageTaux from "./GraphicBrisageTaux"
 
 import stylesButton from "../Navigation/Button.module.css"
 
-import {motion} from 'framer-motion'
+import { motion } from 'framer-motion'
 
 const style = {
     input: styles.searchbox,
@@ -176,20 +176,20 @@ export default function NewBrisage() {
     }
 
     const handleServerChange = (event: any) => {
-    //    console.log(event.target.value)
-       setServer(event.target.value)
+        //    console.log(event.target.value)
+        setServer(event.target.value)
     }
 
     return (
         <div className="background__color">
-            <motion.div 
-            initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0.1 }}
-            className={brisage_styles.brisage__container}>
+            <motion.div
+                initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0.1 }}
+                className={brisage_styles.brisage__container}>
                 <div className={brisage_styles.brisage__title}></div>
                 <div className={brisage_styles.brisage__card}>
                     <div className={brisage_styles.brisage__server__container}>
                         <div className={brisage_styles.brisage__server}>
-                            <Select className={brisage_styles.brisage__pointer} onChange={(event: any) => handleServerChange(event)}>
+                            <Select className={brisage_styles.brisage__pointer} bg='black' focusBorderColor="white" style={{ borderColor: "#a1a1a1" }} onChange={(event: any) => handleServerChange(event)}>
                                 <option value='Imagiro' className={brisage_styles.option__select}>Imagiro</option>
                                 <option value='Draconiros' className={brisage_styles.option__select}>Draconiros</option>
                                 <option value='Tylezia' className={brisage_styles.option__select}>Tylezia</option>
@@ -218,7 +218,7 @@ export default function NewBrisage() {
                     <div>
                         {!item?.name_fr ? null :
                             <>
-                                {isLoading ? <Spinner color='red.500' size='xl' speed="0.7s"/> :
+                                {isLoading ? <Spinner color='red.500' size='xl' speed="0.7s" /> :
                                     <>
                                         <div className={brisage_styles.item__container}>
                                             <div className={brisage_styles.item__display}>
@@ -229,6 +229,7 @@ export default function NewBrisage() {
                                                     {/*// eslint-disable-next-line react/no-children-prop*/}
                                                     Taux
                                                     <NumberInput step={1} value={tauxValue} min={1} max={5000} className={brisage_styles.input__percent}
+                                                        bg='black' focusBorderColor="white"
                                                         onBlur={(event) => handleChangeTaux(event)}
                                                         onChange={(event) => handleChangeTauxValue(event)}>
                                                         <NumberInputField />

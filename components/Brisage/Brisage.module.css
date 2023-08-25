@@ -17,7 +17,7 @@
 
 .brisage__card {
     background-color: #1b2430;
-    padding: 50px;
+    padding: 50px 0px;
     border-radius: 10px;
     width: 98vw;
     height: auto;
@@ -59,6 +59,7 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    padding: 0px 30px;
 }
 
 .item__display {

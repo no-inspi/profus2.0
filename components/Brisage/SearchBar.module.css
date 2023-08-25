@@ -13,6 +13,9 @@
     width: 50vw;
     padding: 10px;
     border-radius: 10px;
+    background-color: black;
+    color: white;
+    border: 1px solid #a1a1a1;
 }
 
 .listbox {
@@ -38,7 +41,7 @@
 }
 
 .highlightedItem {
-    background-color: #01785E;
+    background-color: #a1a1a1;
     border-radius: 8px;
 }
 
@@ -49,7 +52,7 @@
     top: 0px;
     bottom: 0px;
     position: absolute;
-    color: black;
+    color: white;
     cursor: pointer;
     border: none;
     background: transparent;
@@ -60,7 +63,7 @@
 }
 
 .clearButton:hover {
-    background-color: #01785E;
-    color: white;
+    background-color: white;
+    color: black;
     font-size: 1.1rem;
 }

@@ -11,6 +11,16 @@ import {
 
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import {
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    Legend,
+    ResponsiveContainer
+} from "recharts";
 
 import { useState, useEffect } from 'react'
 
@@ -31,11 +41,50 @@ interface RunePriceObject {
     price: any;
 }
 
+interface QuantityWithFocus {
+    desc: any;
+    quantite: any;
+    price: any;
+}
+
+interface QuantityWithoutFocus {
+    desc: any;
+    quantite: any;
+    price: any;
+}
+
+const CustomTooltipTaux = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+        return (
+            <div className={styles.tooltip_container}>
+                <p className="label">{`Taux : ${payload[0].value}%`}</p>
+            </div>
+        );
+    }
+
+    return null;
+};
+
+const renderCustomizedLabel = (props: any) => {
+    const { x, y, width, height, value } = props;
+    const radius = 10;
+  
+    return (
+      <g>
+        <circle cx={x + width / 2} cy={y - radius} r={radius} fill="#8884d8" />
+        <text x={x + width / 2} y={y - radius} fill="#fff" textAnchor="middle" dominantBaseline="middle">
+          {value.split(' ')[1]}
+        </text>
+      </g>
+    );
+  };
 
 export default function NewRunesTable({ data, stats, runePrice, setStats, setRunePrice, item }: any) {
     const [totalSansFocus, setTotalSansFocus] = useState(0)
     const [statsIntern, setStatsIntern] = useState<StatsInternObject[]>([]);
     const [RunesPriceIntern, setRunesPriceIntern] = useState<RunePriceObject[]>([]);
+    const [quantityWithFocus, setQuantityWithFocus] = useState<QuantityWithFocus[]>([])
+    const [quantityWithoutFocus, setQuantityWithoutFocus] = useState<QuantityWithoutFocus[]>([])
 
     const toast = useToast()
 
@@ -43,7 +92,31 @@ export default function NewRunesTable({ data, stats, runePrice, setStats, setRun
         console.log(data)
         setStatsIntern(data.stats)
         setRunesPriceIntern(data.runesPrice)
-    })
+        let quantityWithFocusTmp = []
+        let quantityWithoutFocusTmp = []
+        for (let i = 0; i < data.stats.length; i++) {
+            quantityWithFocusTmp.push({
+                "desc": data.stats[i].desc_fr,
+                "quantite": data.quantityWithFocus[i],
+                "price": data.priceWithFocus[i]
+            })
+
+            quantityWithoutFocusTmp.push({
+                "desc": data.stats[i].desc_fr,
+                "quantite": data.quantityWithoutFocus[i],
+                "price": data.priceWithoutFocus[i]
+            })
+
+        }
+        quantityWithoutFocusTmp.push({
+            "desc": "Total",
+            "quantite": 1,
+            "price": data.totalWithoutFocus
+        })
+        console.log(quantityWithFocusTmp)
+        setQuantityWithFocus(quantityWithFocusTmp)
+        setQuantityWithoutFocus(quantityWithoutFocusTmp)
+    }, [])
 
     function handleTest() {
         // console.log(data.stats)
@@ -73,7 +146,7 @@ export default function NewRunesTable({ data, stats, runePrice, setStats, setRun
                         status: 'error',
                         duration: 9000,
                         isClosable: true,
-                      })
+                    })
                 });
         });
         toast({
@@ -165,62 +238,110 @@ export default function NewRunesTable({ data, stats, runePrice, setStats, setRun
     return (
         <>
             {statsIntern[0] && RunesPriceIntern[0] ?
-                <table className={styles.table__container}>
-                    <thead>
-                        <tr>
-                            <th>Runes</th>
-                            <th>Statistiques de l&apos;item</th>
-                            <th>Prix de la rune (/u)</th>
-                            <th>Quantité</th>
+                <div className={styles.all__table__container}>
+                    <table className={styles.table__container}>
+                        <thead>
+                            <tr>
+                                <th>Runes</th>
+                                <th>Statistiques de l&apos;item</th>
+                                <th>Prix de la rune (/u)</th>
+                                {/* <th>Quantité</th>
                             <th>Prix</th>
-                            <th>Aucun focus</th>
-                        </tr>
+                            <th>Aucun focus</th> */}
+                            </tr>
 
-                    </thead>
-                    <tbody>
-                        {data.stats.map((object: any, i: any) => {
-                            return (
-                                <tr key={object.id_rune}>
-                                    <td className={styles.td}>
-                                        {/* <i className={`${global_styles.stat} ${global_styles.stat_force} ${styles.icon_carac}`}></i>  */}
-                                        {object.desc_fr}
-                                    </td>
-                                    <td>
-                                        <div className={styles.input_container}>
-                                            <Input placeholder='10' className={styles.nb_input} size='sm' htmlSize={6} width='auto' focusBorderColor='#01785E' value={statsIntern[i].value}
-                                                onBlur={(event) => handleStat(event, object.id_rune, i)}
-                                                onChange={(event) => handleChangeStat(event, i)} />
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className={styles.input_container}>
-                                            <Input placeholder='10' className={styles.nb_input} size='sm' htmlSize={6} width='auto' focusBorderColor='#01785E' value={RunesPriceIntern[i].price}
-                                                onBlur={(event) => handleRunes(event, object.id_rune, i)}
-                                                onChange={(event) => handleChangeRunePrice(event, i)} />
-                                        </div>
-                                    </td>
-                                    <td>{data.quantityWithFocus[i]}</td>
+                        </thead>
+                        <tbody>
+                            {data.stats.map((object: any, i: any) => {
+                                return (
+                                    <tr key={object.id_rune}>
+                                        <td className={styles.td}>
+                                            {/* <i className={`${global_styles.stat} ${global_styles.stat_force} ${styles.icon_carac}`}></i>  */}
+                                            {object.desc_fr}
+                                        </td>
+                                        <td>
+                                            <div className={styles.input_container}>
+                                                <Input placeholder='10' bg='black' focusBorderColor="white" className={styles.nb_input} size='sm' htmlSize={6} width='auto' value={statsIntern[i].value}
+                                                    onBlur={(event) => handleStat(event, object.id_rune, i)}
+                                                    onChange={(event) => handleChangeStat(event, i)} />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div className={styles.input_container}>
+                                                <Input placeholder='10' bg='black' focusBorderColor="white" className={styles.nb_input} size='sm' htmlSize={6} width='auto' value={RunesPriceIntern[i].price}
+                                                    onBlur={(event) => handleRunes(event, object.id_rune, i)}
+                                                    onChange={(event) => handleChangeRunePrice(event, i)} />
+                                            </div>
+                                        </td>
+                                        {/* <td>{data.quantityWithFocus[i]}</td>
                                     <td>{data.priceWithFocus[i]}</td>
-                                    <td>{data.priceWithoutFocus[i]}</td>
-                                </tr>
-                            );
-                        })}
+                                    <td>{data.priceWithoutFocus[i]}</td> */}
+                                    </tr>
+                                );
+                            })}
 
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td>
-                            <Button className={`${stylesButton.button} ${stylesButton.white}`}> Save Runes </Button>
+                        </tbody>
+                        {/* <tfoot>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <Button className={`${stylesButton.button} ${stylesButton.white}`}> Save Runes </Button>
                                 </td>
-                            <td colSpan={2} className={styles.footer_total}><b>Total sans focus :</b></td>
-                            <td className={styles.td}>
-                                <b>{data.totalWithoutFocus}</b>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
+                                <td colSpan={2} className={styles.footer_total}><b>Total sans focus :</b></td>
+                                <td className={styles.td}>
+                                    <b>{data.totalWithoutFocus}</b>
+                                </td>
+                            </tr>
+                        </tfoot> */}
+                    </table>
+                    <div className={styles.graph__container}>
+                        <ResponsiveContainer width="100%" height="100%">
+                            <BarChart
+                                width={300}
+                                height={300}
+                                data={quantityWithFocus}
+                                margin={{
+                                    top: 5,
+                                    right: 30,
+                                    left: 20,
+                                    bottom: 5
+                                }}
+                                barSize={40}
+                            >
+                                <XAxis dataKey="desc" padding={{ left: 0, right: 0 }} />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <CartesianGrid strokeDasharray="2 2" />
+                                {/* <Bar dataKey="quantite" fill="#8884d8"  /> */}
+                                <Bar dataKey="price" fill="#82ca9d" />
+                            </BarChart>
+                        </ResponsiveContainer>
+                        <ResponsiveContainer width="100%" height="100%">
+                            <BarChart
+                                width={300}
+                                height={300}
+                                data={quantityWithoutFocus}
+                                margin={{
+                                    top: 5,
+                                    right: 30,
+                                    left: 20,
+                                    bottom: 5
+                                }}
+                                barSize={40}
+                            >
+                                <XAxis dataKey="desc" padding={{ left: 0, right: 0 }} />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <CartesianGrid strokeDasharray="2 2" />
+                                {/* <Bar dataKey="quantite" fill="#8884d8"  /> */}
+                                <Bar dataKey="price" fill="#82ca9d" />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
                 : null}
         </>
     )
