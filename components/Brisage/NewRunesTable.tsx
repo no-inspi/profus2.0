@@ -19,7 +19,10 @@ import {
     CartesianGrid,
     Tooltip,
     Legend,
-    ResponsiveContainer
+    ResponsiveContainer,
+    Cell,
+    LabelList,
+    ReferenceLine
 } from "recharts";
 
 import { useState, useEffect } from 'react'
@@ -68,16 +71,16 @@ const CustomTooltipTaux = ({ active, payload, label }: any) => {
 const renderCustomizedLabel = (props: any) => {
     const { x, y, width, height, value } = props;
     const radius = 10;
-  
+
     return (
-      <g>
-        <circle cx={x + width / 2} cy={y - radius} r={radius} fill="#8884d8" />
-        <text x={x + width / 2} y={y - radius} fill="#fff" textAnchor="middle" dominantBaseline="middle">
-          {value.split(' ')[1]}
-        </text>
-      </g>
+        <g>
+            <circle cx={x + width / 2} cy={y - radius} r={radius} fill="#8884d8" />
+            <text x={x + width / 2} y={y - radius} fill="#fff" textAnchor="middle" dominantBaseline="middle">
+                {value.split(' ')[1]}
+            </text>
+        </g>
     );
-  };
+};
 
 export default function NewRunesTable({ data, stats, runePrice, setStats, setRunePrice, item }: any) {
     const [totalSansFocus, setTotalSansFocus] = useState(0)
@@ -85,15 +88,16 @@ export default function NewRunesTable({ data, stats, runePrice, setStats, setRun
     const [RunesPriceIntern, setRunesPriceIntern] = useState<RunePriceObject[]>([]);
     const [quantityWithFocus, setQuantityWithFocus] = useState<QuantityWithFocus[]>([])
     const [quantityWithoutFocus, setQuantityWithoutFocus] = useState<QuantityWithoutFocus[]>([])
+    const [colorsArray, setColorsArray] = useState<string[]>([])
 
     const toast = useToast()
 
     useEffect(() => {
-        console.log(data)
         setStatsIntern(data.stats)
         setRunesPriceIntern(data.runesPrice)
         let quantityWithFocusTmp = []
         let quantityWithoutFocusTmp = []
+        let colorsArrayTmp = []
         for (let i = 0; i < data.stats.length; i++) {
             quantityWithFocusTmp.push({
                 "desc": data.stats[i].desc_fr,
@@ -113,9 +117,20 @@ export default function NewRunesTable({ data, stats, runePrice, setStats, setRun
             "quantite": 1,
             "price": data.totalWithoutFocus
         })
-        console.log(quantityWithFocusTmp)
+
+        for (let j = 0; j < quantityWithoutFocusTmp.length; j++) {
+            if (quantityWithoutFocusTmp.length - 1 == j) {
+                colorsArrayTmp.push("#ff7f0e")
+            }
+            else {
+                colorsArrayTmp.push("#1f77b4")
+            }
+
+        }
+        console.log(quantityWithFocusTmp, colorsArrayTmp)
         setQuantityWithFocus(quantityWithFocusTmp)
         setQuantityWithoutFocus(quantityWithoutFocusTmp)
+        setColorsArray(colorsArrayTmp)
     }, [])
 
     function handleTest() {
@@ -279,7 +294,13 @@ export default function NewRunesTable({ data, stats, runePrice, setStats, setRun
                                     </tr>
                                 );
                             })}
-
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <Button className={`${stylesButton.button} ${stylesButton.white}`} onClick={handleTest}> Save Runes </Button>
+                                </td>
+                            </tr>
                         </tbody>
                         {/* <tfoot>
                             <tr>
@@ -298,46 +319,45 @@ export default function NewRunesTable({ data, stats, runePrice, setStats, setRun
                     <div className={styles.graph__container}>
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart
-                                width={300}
+                                width={500}
                                 height={300}
                                 data={quantityWithFocus}
-                                margin={{
-                                    top: 5,
-                                    right: 30,
-                                    left: 20,
-                                    bottom: 5
-                                }}
+                                
                                 barSize={40}
                             >
                                 <XAxis dataKey="desc" padding={{ left: 0, right: 0 }} />
                                 <YAxis />
                                 <Tooltip />
                                 <Legend />
-                                <CartesianGrid strokeDasharray="2 2" />
+                                {/* <CartesianGrid strokeDasharray="2 2" /> */}
                                 {/* <Bar dataKey="quantite" fill="#8884d8"  /> */}
-                                <Bar dataKey="price" fill="#82ca9d" />
+                                <Bar dataKey="price" fill="#82ca9d" name='Prix avec focus'>
+                                    <LabelList  dataKey="price" position="center" style={{fontWeight: "700", fontSize: '70%', fill: 'black' }} />
+                                </Bar>
                             </BarChart>
                         </ResponsiveContainer>
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart
                                 width={300}
-                                height={300}
+                                height={400}
                                 data={quantityWithoutFocus}
-                                margin={{
-                                    top: 5,
-                                    right: 30,
-                                    left: 20,
-                                    bottom: 5
-                                }}
+                                
                                 barSize={40}
                             >
                                 <XAxis dataKey="desc" padding={{ left: 0, right: 0 }} />
                                 <YAxis />
                                 <Tooltip />
                                 <Legend />
-                                <CartesianGrid strokeDasharray="2 2" />
+                                {/* <CartesianGrid strokeDasharray="2 2" /> */}
                                 {/* <Bar dataKey="quantite" fill="#8884d8"  /> */}
-                                <Bar dataKey="price" fill="#82ca9d" />
+                                <Bar dataKey="price" fill="#1f77b4" name='Prix sans focus'  >
+                                    {
+                                        colorsArray.map((entry, index) => (
+                                            <Cell key={`cell-${index}`} fill={entry} />
+                                        ))
+                                    }
+                                    <LabelList dataKey="price" position="center" style={{fontWeight: "700", fontSize: '70%', fill: 'black' }} />
+                                </Bar>
                             </BarChart>
                         </ResponsiveContainer>
                     </div>

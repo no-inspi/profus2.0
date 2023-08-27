@@ -27,7 +27,7 @@ const CustomTooltipRunePrice = ({ active, payload, label }: any) => {
         return (
             <div className={styles.tooltip_container}>
                 <p className="label">{`Prix : ${Math.floor(payload[0].value)}`}</p>
-                <p className="label">{`Date : ${format(new Date(payload[0].payload.saved_date), "dd/MMM/yyyy")}`}</p>
+                <p className="label">{`Date : ${format(new Date(payload[0].payload.saved_date), "dd MM yyyy")}`}</p>
             </div>
         );
     }
@@ -36,7 +36,7 @@ const CustomTooltipRunePrice = ({ active, payload, label }: any) => {
 };
 
 const dateFormatter = (date: any) => {
-    return format(new Date(date), "dd/MMM/yyyy");
+    return format(new Date(date), "dd MM yyyy");
   };
 
 export default function GraphicBrisageTaux({ item, data }: any) {
@@ -111,12 +111,11 @@ export default function GraphicBrisageTaux({ item, data }: any) {
                                         bottom: 5,
                                     }}
                                 >
-                                    <CartesianGrid strokeDasharray="3 3" />
                                     <XAxis dataKey="createdAt" tickFormatter={dateFormatter}/>
                                     <YAxis />
                                     <Tooltip content={<CustomTooltipTaux />} />
                                     <Legend />
-                                    <Line type="monotone" dataKey="taux" stroke="white" activeDot={{ r: 3 }} />
+                                    <Line type="monotone" dataKey="taux" stroke="white" activeDot={{ r: 3 }} name='Taux de brisage' />
                                 </LineChart>
                             </ResponsiveContainer>
                         </div>
@@ -140,12 +139,11 @@ export default function GraphicBrisageTaux({ item, data }: any) {
                                         bottom: 5,
                                     }}
                                 >
-                                    <CartesianGrid strokeDasharray="3 3" />
                                     <XAxis dataKey="saved_date" tickFormatter={dateFormatter}/>
                                     <YAxis />
                                     <Tooltip content={<CustomTooltipRunePrice />} />
                                     <Legend />
-                                    <Line type="monotone" dataKey="_avg.price" stroke="white" dot={false}/>
+                                    <Line type="monotone" dataKey="_avg.price" stroke="white" dot={false} name='Prix moyens'/>
                                 </LineChart>
                             </ResponsiveContainer>
                         </div>
