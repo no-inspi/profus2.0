@@ -210,7 +210,7 @@ export default function Navigation() {
                   </>
                 ) : (
                   <div className={styles.connected__container}>
-                    <Tooltip label="Paramètres du compte" aria-label='save_tooltip'>
+                    <Tooltip label="Paramètres du comptes" aria-label='save_tooltip'>
                       <div className={`${styles.connected__settings} ${stylesButton.white}`}><GiSettingsKnobs /></div>
                     </Tooltip>
                     <button className={`${stylesButton.button} ${stylesButton.dark} ${styles.connected__deconnexion}`} onClick={deconnexion}> Deconnexion <GiExitDoor /> </button>
